@@ -4,6 +4,8 @@ Thumbs.db
 
 # Build
 dist/
+*.xpi
+.amo-upload-uuid
 
 # IDE
 *.code-workspace
