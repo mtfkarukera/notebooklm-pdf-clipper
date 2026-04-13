@@ -40,6 +40,7 @@ window.ClipperMarkdownGenerator = {
           break;
 
         case 'meta-url':
+          lines.push('');
           lines.push(block.text);
           lines.push('');
           lines.push('---');

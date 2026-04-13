@@ -178,4 +178,4 @@ notebooklm-pdf-clipper/
 ---
 
 *Projet développé selon la méthodologie **Spec-Driven Development (SDD)**.*
-*Version 3.5.3 — Avril 2026*
+*Version 3.5.4 — Avril 2026*
