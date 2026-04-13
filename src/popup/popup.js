@@ -400,12 +400,14 @@ async function checkPendingSelection() {
      uiSelectionPreview.textContent = `"${preview}" (${wordCount} mots)`;
      uiSelectionBanner.classList.remove('hidden');
      
-     // Basculer sur le format "selection" et griser URL + Screenshot (inutiles pour du texte)
-     uiFormatToggle.querySelectorAll('.format-btn').forEach(b => b.classList.remove('active'));
-     const urlBtn = uiFormatToggle.querySelector('[data-format="url"]');
-     const screenshotBtn = uiFormatToggle.querySelector('[data-format="screenshot"]');
-     if (urlBtn) urlBtn.classList.add('btn-disabled');
-     if (screenshotBtn) screenshotBtn.classList.add('btn-disabled');
+     // Basculer sur le format "selection" et griser TOUS les boutons de format
+     // (la sélection ne supporte qu'un seul mode : texte source)
+     uiFormatToggle.querySelectorAll('.format-btn').forEach(b => {
+       b.classList.remove('active');
+       b.classList.add('btn-disabled');
+     });
+     // Griser aussi le bouton Import Direct s'il est visible
+     if (btnDirectImport) btnDirectImport.classList.add('btn-disabled');
      
      currentFormat = 'selection';
      updateCaptureButtonLabel();

@@ -386,14 +386,24 @@ browser.runtime.onMessage.addListener((message, sender, sendResponse) => {
 
                     notifyUI("STATUS_UPDATE", { text: "📋 Upload de la sélection...", status: "info" });
 
-                    // Construire le texte avec métadonnées de grounding
-                    const header = `Source: ${sel.pageUrl}\nTitre: ${sel.pageTitle}\nDate de capture: ${new Date().toLocaleString()}\n\n---\n\n`;
-                    const content = header + sel.text;
-
+                    // Titre de la source dans NotebookLM
                     const cleanTitle = (sel.pageTitle || 'Sélection')
                         .replace(/[<>:"/\\|?*]/g, '').trim().substring(0, 80);
+                    const sourceTitle = `📋 ${cleanTitle}`;
 
-                    await addTextSource(finalNotebookId, content, `📋 ${cleanTitle}`, activeIndex);
+                    // Contenu structuré avec métadonnées de grounding
+                    const content = [
+                        `Source: ${sel.pageUrl}`,
+                        `Titre: ${sel.pageTitle}`,
+                        `Date de capture: ${new Date().toLocaleString()}`,
+                        '',
+                        '---',
+                        '',
+                        sel.text
+                    ].join('\n');
+
+                    // addTextSource(notebookId, title, content, authuser)
+                    await addTextSource(finalNotebookId, sourceTitle, content, activeIndex);
 
                     const notebookUrl = `https://notebooklm.google.com/notebook/${finalNotebookId}`;
                     notifyUI("STATUS_UPDATE", {
