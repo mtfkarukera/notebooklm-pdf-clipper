@@ -145,7 +145,7 @@ function decodeResponse(rawResponse, rpcId) {
 // 3. TRANSPORT (envoi HTTP)
 // ============================================
 
-export async function sendBatchExecute(rpcId, jsonArgs) {
+export async function sendBatchExecute(rpcId, jsonArgs, authuserIndex = 0) {
     const data = await browser.storage.local.get(['nblm_personal_cookie', 'nblm_csrf']);
     if (!data.nblm_personal_cookie || !data.nblm_csrf) {
         throw new Error("Authentification personnelle non finalisée.");
@@ -155,7 +155,7 @@ export async function sendBatchExecute(rpcId, jsonArgs) {
     const rpcRequest = encodeRpcRequest(rpcId, jsonArgs);
     const body = buildRequestBody(rpcRequest, data.nblm_csrf);
     const queryString = buildQueryParams(rpcId);
-    const endpoint = `https://notebooklm.google.com/_/LabsTailwindUi/data/batchexecute?${queryString}`;
+    const endpoint = `https://notebooklm.google.com/_/LabsTailwindUi/data/batchexecute?${queryString}&authuser=${authuserIndex}`;
 
     const response = await fetch(endpoint, {
         method: 'POST',
@@ -184,11 +184,11 @@ export async function sendBatchExecute(rpcId, jsonArgs) {
 // 4. FACADES MÉTIER
 // ============================================
 
-export async function listPersonalNotebooks() {
+export async function listPersonalNotebooks(authuserIndex = 0) {
     const rpcId = "wXbhsf";
     
     // Paramètres exacts de notebooklm-py : [None, 1, None, [2]]
-    const result = await sendBatchExecute(rpcId, [null, 1, null, [2]]);
+    const result = await sendBatchExecute(rpcId, [null, 1, null, [2]], authuserIndex);
     
     if (!result || !Array.isArray(result)) {
         console.warn("[NotebookLM RPC] Réponse inattendue pour LIST_NOTEBOOKS:", result);
@@ -223,10 +223,10 @@ export async function listPersonalNotebooks() {
     return notebooks;
 }
 
-export async function createPersonalNotebook(title) {
+export async function createPersonalNotebook(title, authuserIndex = 0) {
     // RPC ID: CCqFvf (de notebooklm-py)
     const rpcId = "CCqFvf";
-    const result = await sendBatchExecute(rpcId, [title, null]);
+    const result = await sendBatchExecute(rpcId, [title, null], authuserIndex);
     
     // L'ID du nouveau carnet est typiquement à result[2] ou result[0][2]
     if (result && Array.isArray(result)) {
@@ -247,7 +247,7 @@ export async function createPersonalNotebook(title) {
  * @param {string} title - Titre de la source (affiché dans NotebookLM).
  * @param {string} content - Contenu textuel/Markdown à injecter.
  */
-export async function addTextSource(notebookId, title, content) {
+export async function addTextSource(notebookId, title, content, authuserIndex = 0) {
     console.log(`[NotebookLM RPC] Ajout source texte: "${title}" (${content.length} chars)`);
     
     const rpcId = "izAoDd";
@@ -261,7 +261,7 @@ export async function addTextSource(notebookId, title, content) {
         null,
     ];
     
-    const result = await sendBatchExecute(rpcId, params);
+    const result = await sendBatchExecute(rpcId, params, authuserIndex);
     
     if (result) {
         console.log("[NotebookLM RPC] ✅ Source texte ajoutée avec succès !");
@@ -280,7 +280,7 @@ export async function addTextSource(notebookId, title, content) {
  * @param {string} notebookId - ID du carnet cible.
  * @param {string} url - URL complète de la page web à importer.
  */
-export async function addUrlSource(notebookId, url) {
+export async function addUrlSource(notebookId, url, authuserIndex = 0) {
     console.log(`[NotebookLM RPC] Ajout source URL: ${url}`);
     
     const rpcId = "izAoDd";
@@ -294,7 +294,7 @@ export async function addUrlSource(notebookId, url) {
         null,
     ];
     
-    const result = await sendBatchExecute(rpcId, params);
+    const result = await sendBatchExecute(rpcId, params, authuserIndex);
     
     if (result) {
         console.log("[NotebookLM RPC] ✅ Source URL ajoutée avec succès !");
@@ -305,7 +305,7 @@ export async function addUrlSource(notebookId, url) {
     return true;
 }
 
-export async function uploadPersonalSource(notebookId, pdfDataUri, customTitle = null) {
+export async function uploadPersonalSource(notebookId, pdfDataUri, customTitle = null, authuserIndex = 0) {
     console.log("[NotebookLM RPC] Démarrage upload PDF (protocole resumable en 3 étapes)...");
     
     const data = await browser.storage.local.get(['nblm_personal_cookie', 'nblm_csrf']);
@@ -342,7 +342,7 @@ export async function uploadPersonalSource(notebookId, pdfDataUri, customTitle =
         [1, null, null, null, null, null, null, null, null, null, [1]]
     ];
     
-    const registerResult = await sendBatchExecute(registerRpcId, registerParams);
+    const registerResult = await sendBatchExecute(registerRpcId, registerParams, authuserIndex);
     
     // Extraire le SOURCE_ID de la réponse (structure imbriquée: [[[[id]]]] ou similaire)
     const sourceId = extractFirstString(registerResult);
@@ -356,7 +356,7 @@ export async function uploadPersonalSource(notebookId, pdfDataUri, customTitle =
     // ║ POST https://notebooklm.google.com/upload/_/          ║
     // ║ Headers: x-goog-upload-command: start                 ║
     // ╚════════════════════════════════════════════════════════╝
-    const uploadStartUrl = "https://notebooklm.google.com/upload/_/?authuser=0";
+    const uploadStartUrl = `https://notebooklm.google.com/upload/_/?authuser=${authuserIndex}`;
     
     const startBody = JSON.stringify({
         "PROJECT_ID": notebookId,
@@ -372,7 +372,7 @@ export async function uploadPersonalSource(notebookId, pdfDataUri, customTitle =
             'Cookie': data.nblm_personal_cookie,
             'Origin': 'https://notebooklm.google.com',
             'Referer': 'https://notebooklm.google.com/',
-            'x-goog-authuser': '0',
+            'x-goog-authuser': String(authuserIndex),
             'x-goog-upload-command': 'start',
             'x-goog-upload-header-content-length': String(fileSize),
             'x-goog-upload-protocol': 'resumable'
@@ -403,7 +403,7 @@ export async function uploadPersonalSource(notebookId, pdfDataUri, customTitle =
             'Cookie': data.nblm_personal_cookie,
             'Origin': 'https://notebooklm.google.com',
             'Referer': 'https://notebooklm.google.com/',
-            'x-goog-authuser': '0',
+            'x-goog-authuser': String(authuserIndex),
             'x-goog-upload-command': 'upload, finalize',
             'x-goog-upload-offset': '0'
         },

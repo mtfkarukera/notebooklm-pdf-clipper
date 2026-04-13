@@ -19,16 +19,46 @@ browser.runtime.onMessage.addListener((message, sender, sendResponse) => {
     if (message.action === "GET_AUTH_STATUS") {
         sendResponse({ status: "CONNECTE", type: "PERSONAL" });
     }
+
+    if (message.action === "GET_ACCOUNTS") {
+        (async () => {
+            try {
+                const { getPersonalAuthCookies, detectGoogleAccounts } = await import('./api/auth_personal.js');
+                const cookieString = await getPersonalAuthCookies();
+                const accounts = await detectGoogleAccounts(cookieString);
+                
+                const data = await browser.storage.local.get('nblm_active_authuser');
+                const activeIndex = data.nblm_active_authuser !== undefined ? data.nblm_active_authuser : 0;
+                
+                sendResponse({ accounts, activeIndex });
+            } catch (err) {
+                console.error("[Background] Échec GET_ACCOUNTS: ", err.message);
+                sendResponse({ error: err.message, accounts: [] });
+            }
+        })();
+        return true;
+    }
+
+    if (message.action === "SET_ACCOUNT") {
+        browser.storage.local.set({ nblm_active_authuser: message.index }).then(() => {
+            sendResponse({ ok: true });
+        });
+        return true;
+    }
     
     if (message.action === "GET_NOTEBOOKS") {
         (async () => {
             try {
                 const { getPersonalAuthCookies, fetchCSRFToken } = await import('./api/auth_personal.js');
                 const cookieString = await getPersonalAuthCookies();
-                await fetchCSRFToken(cookieString);
+                
+                const data = await browser.storage.local.get('nblm_active_authuser');
+                const activeIndex = data.nblm_active_authuser !== undefined ? data.nblm_active_authuser : 0;
+                
+                await fetchCSRFToken(cookieString, activeIndex);
 
                 const { listPersonalNotebooks } = await import('./api/rpc_client.js');
-                const notebooks = await listPersonalNotebooks();
+                const notebooks = await listPersonalNotebooks(activeIndex);
                 
                 sendResponse({ notebooks });
             } catch (err) {
@@ -44,9 +74,12 @@ browser.runtime.onMessage.addListener((message, sender, sendResponse) => {
         (async () => {
             try {
                 const cookieString = await getPersonalAuthCookies();
-                await fetchCSRFToken(cookieString);
+                const data = await browser.storage.local.get('nblm_active_authuser');
+                const activeIndex = data.nblm_active_authuser !== undefined ? data.nblm_active_authuser : 0;
                 
-                const notebookId = await createPersonalNotebook(message.title);
+                await fetchCSRFToken(cookieString, activeIndex);
+                
+                const notebookId = await createPersonalNotebook(message.title, activeIndex);
                 sendResponse({ notebookId });
             } catch (err) {
                 console.error("[Background] Échec création carnet:", err.message);
@@ -149,9 +182,12 @@ async function executeCaptureAndUploadWorkflow(targetNotebookId, format) {
     
     notifyUI("STATUS_UPDATE", { text: "Récupération Session Personnelle...", status: "info" });
     
-    // 1. AUTHENTIFICATION
+    // 1. AUTHENTIFICATION ET COMPTE
     const cookieString = await getPersonalAuthCookies();
-    await fetchCSRFToken(cookieString);
+    const data = await browser.storage.local.get('nblm_active_authuser');
+    const activeIndex = data.nblm_active_authuser !== undefined ? data.nblm_active_authuser : 0;
+    
+    await fetchCSRFToken(cookieString, activeIndex);
 
     // 2. Récupérer l'onglet actif
     const tabs = await browser.tabs.query({ active: true, currentWindow: true });
@@ -173,7 +209,7 @@ async function executeCaptureAndUploadWorkflow(targetNotebookId, format) {
     if (finalNotebookId === "CREATE_NEW") {
         notifyUI("STATUS_UPDATE", { text: "Création du carnet...", status: "info" });
         const title = `Capture - ${new Date().toLocaleDateString()}`;
-        finalNotebookId = await createPersonalNotebook(title);
+        finalNotebookId = await createPersonalNotebook(title, activeIndex);
     }
     if (!finalNotebookId) throw new Error("Échec de la récupération de l'ID du carnet.");
 
@@ -182,7 +218,7 @@ async function executeCaptureAndUploadWorkflow(targetNotebookId, format) {
         // ═══ Pipeline URL : injection directe, zéro content script ═══
         notifyUI("STATUS_UPDATE", { text: "Envoi de l'URL à NotebookLM...", status: "info" });
 
-        await addUrlSource(finalNotebookId, pageUrl);
+        await addUrlSource(finalNotebookId, pageUrl, activeIndex);
 
         const notebookUrl = `https://notebooklm.google.com/notebook/${finalNotebookId}`;
         notifyUI("STATUS_UPDATE", { 
@@ -213,7 +249,7 @@ async function executeCaptureAndUploadWorkflow(targetNotebookId, format) {
         if (capturedFormat === "md") {
             // ─── Pipeline Markdown : RPC texte direct ───
             notifyUI("STATUS_UPDATE", { text: "Envoi du Markdown (source texte)...", status: "info" });
-            await addTextSource(finalNotebookId, cleanTitle, capturedData);
+            await addTextSource(finalNotebookId, cleanTitle, capturedData, activeIndex);
 
             const notebookUrl = `https://notebooklm.google.com/notebook/${finalNotebookId}`;
             notifyUI("STATUS_UPDATE", { 
@@ -232,7 +268,7 @@ async function executeCaptureAndUploadWorkflow(targetNotebookId, format) {
             }
 
             notifyUI("STATUS_UPDATE", { text: `Envoi du PDF (Serveurs Google)...`, status: "info" });
-            await uploadPersonalSource(finalNotebookId, capturedData, cleanTitle);
+            await uploadPersonalSource(finalNotebookId, capturedData, cleanTitle, activeIndex);
 
             const notebookUrl = `https://notebooklm.google.com/notebook/${finalNotebookId}`;
             notifyUI("STATUS_UPDATE", { 

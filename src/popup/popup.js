@@ -29,7 +29,34 @@ document.addEventListener('DOMContentLoaded', () => {
   browser.runtime.sendMessage({ action: "GET_AUTH_STATUS" }).then((response) => {
      if(response && response.status === "CONNECTE") {
          updateAuthStatus(`Connecté (${response.type})`, "status-success");
-         loadNotebooks();
+         
+         if (response.type === "PERSONAL") {
+             browser.runtime.sendMessage({ action: "GET_ACCOUNTS" }).then(res => {
+                 if (res && res.accounts && res.accounts.length > 1) {
+                     const selectBox = document.getElementById("account-switcher");
+                     if(selectBox) {
+                         selectBox.innerHTML = '';
+                         res.accounts.forEach(acc => {
+                             const opt = document.createElement("option");
+                             opt.value = acc.index;
+                             opt.textContent = acc.email;
+                             if (acc.index === res.activeIndex) opt.selected = true;
+                             selectBox.appendChild(opt);
+                         });
+                         selectBox.classList.remove("hidden");
+                         selectBox.addEventListener("change", (e) => {
+                             const newIndex = parseInt(e.target.value, 10);
+                             browser.runtime.sendMessage({ action: "SET_ACCOUNT", index: newIndex }).then(() => {
+                                 loadNotebooks(); // Recharger les carnets
+                             });
+                         });
+                     }
+                 }
+                 loadNotebooks();
+             }).catch(() => loadNotebooks());
+         } else {
+             loadNotebooks();
+         }
      } else {
          updateAuthStatus("Déconnecté", "status-error");
          setPlaceholder(uiNotebookList, "Erreur d'authentification.");
@@ -227,20 +254,6 @@ function updateStatus(message, type, linkUrl, showDownload) {
     });
     uiStatusMessage.appendChild(dlLink);
   }
-
-  // Ajout du bouton "Fermer" sur les états finaux (succès ou erreur)
-  if (type === "success" || type === "error") {
-    const closeLink = document.createElement('a');
-    closeLink.href = '#';
-    closeLink.textContent = ' ✖ Fermer';
-    closeLink.style.cssText = 'color: var(--text-muted); text-decoration: underline; cursor: pointer; margin-left: 12px; font-size: 12px;';
-    closeLink.addEventListener('click', (e) => {
-      e.preventDefault();
-      e.stopPropagation();
-      window.close(); // Ferme la popup nativement
-    });
-    uiStatusMessage.appendChild(closeLink);
-  }
   
   if(type === "error") uiStatusMessage.style.color = "var(--status-error)";
   else if (type === "success") uiStatusMessage.style.color = "var(--status-success)";
@@ -251,6 +264,11 @@ function updateAuthStatus(text, cssClass) {
   uiAuthStatus.textContent = text;
   uiAuthStatus.className = `status-badge ${cssClass}`;
 }
+
+// Event au clic sur le bouton Fermer du header
+document.getElementById('btn-close').addEventListener('click', () => {
+  window.close();
+});
 
 browser.runtime.onMessage.addListener((message) => {
   if(message.type === "STATUS_UPDATE") {

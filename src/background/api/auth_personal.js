@@ -19,10 +19,10 @@ export async function getPersonalAuthCookies() {
   return cookieString;
 }
 
-export async function fetchCSRFToken(cookieString) {
+export async function fetchCSRFToken(cookieString, authuserIndex = 0) {
   // Le token SNlM0e est indispensable pour la signature des charges utiles batchexecute
   try {
-    const response = await fetch("https://notebooklm.google.com/", {
+    const response = await fetch(`https://notebooklm.google.com/?authuser=${authuserIndex}`, {
       method: 'GET',
       headers: {
          'Cookie': cookieString,
@@ -52,4 +52,43 @@ export async function fetchCSRFToken(cookieString) {
   } catch (error) {
     throw error;
   }
+}
+
+export async function detectGoogleAccounts(cookieString) {
+  const accounts = [];
+  const maxAccounts = 5; // On ne scanne pas à l'infini
+
+  for (let i = 0; i < maxAccounts; i++) {
+    try {
+      const response = await fetch(`https://notebooklm.google.com/?authuser=${i}`, {
+        method: 'GET',
+        headers: { 'Cookie': cookieString }
+      });
+
+      // Si Google nous redirige vers la page de login, ce compte n'existe pas ou n'est pas connecté
+      if (response.url.includes('accounts.google.com') || response.url.includes('ServiceLogin')) {
+        break; 
+      }
+      
+      if (!response.ok) break;
+
+      const html = await response.text();
+      
+      // Extraction de l'email. Google le place souvent dans le WIZ_global_data
+      // On cherche un format typique d'email encadré par des guillemets
+      const emailMatch = html.match(/"([a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,})"/);
+      
+      if (emailMatch && emailMatch[1]) {
+        accounts.push({ index: i, email: emailMatch[1] });
+      } else {
+        // En secours si la regex échoue mais que la page a chargé (session valide)
+        accounts.push({ index: i, email: `Compte ${i+1} (Index ${i})` });
+      }
+    } catch (err) {
+      console.warn(`[Multi-Account] Arrêt de la détection à l'index ${i}`, err);
+      break;
+    }
+  }
+
+  return accounts;
 }
