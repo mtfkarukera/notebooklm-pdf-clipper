@@ -227,6 +227,20 @@ function updateStatus(message, type, linkUrl, showDownload) {
     });
     uiStatusMessage.appendChild(dlLink);
   }
+
+  // Ajout du bouton "Fermer" sur les états finaux (succès ou erreur)
+  if (type === "success" || type === "error") {
+    const closeLink = document.createElement('a');
+    closeLink.href = '#';
+    closeLink.textContent = ' ✖ Fermer';
+    closeLink.style.cssText = 'color: var(--text-muted); text-decoration: underline; cursor: pointer; margin-left: 12px; font-size: 12px;';
+    closeLink.addEventListener('click', (e) => {
+      e.preventDefault();
+      e.stopPropagation();
+      window.close(); // Ferme la popup nativement
+    });
+    uiStatusMessage.appendChild(closeLink);
+  }
   
   if(type === "error") uiStatusMessage.style.color = "var(--status-error)";
   else if (type === "success") uiStatusMessage.style.color = "var(--status-success)";

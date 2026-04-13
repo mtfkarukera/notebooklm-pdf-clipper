@@ -1,7 +1,7 @@
 {
   "manifest_version": 3,
   "name": "NotebookLM Web Clipper",
-  "version": "3.4.0",
+  "version": "3.4.3",
   "description": "Capturez le contenu structuré d'une page web et importez-le en PDF dans Google NotebookLM — optimisé pour l'analyse IA.",
   "browser_specific_settings": {
     "gecko": {

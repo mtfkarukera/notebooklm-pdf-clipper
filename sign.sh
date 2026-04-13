@@ -2,6 +2,8 @@
 # Script de signature de l'extension NotebookLM Web Clipper
 # Usage: ./sign.sh JWT_ISSUER JWT_SECRET
 
+set -e
+
 if [ -z "$1" ] || [ -z "$2" ]; then
   echo "Usage: ./sign.sh <JWT_ISSUER> <JWT_SECRET>"
   echo ""
