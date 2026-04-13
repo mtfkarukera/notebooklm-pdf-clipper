@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <title>NotebookLM Web Clipper</title>
+  <link rel="stylesheet" href="popup.css">
+</head>
+<body>
+  <!-- HEADER -->
+  <header class="app-header">
+    <div class="logo">
+      <div class="logo-icon"></div>
+      <span class="logo-text">NotebookLM</span>
+    </div>
+    <!-- Pastille status compte utilisateur -->
+    <div id="auth-status" class="status-badge status-loading">Connexion...</div>
+  </header>
+
+  <!-- RECHERCHE & SELECTION CARNET -->
+  <section class="research-section">
+    <label for="notebook-search">Vos Carnets</label>
+    <div class="input-group">
+      <input type="text" id="notebook-search" placeholder="Rechercher un carnet (Fast Research)..." disabled />
+      <button id="btn-create-notebook" title="Créer un nouveau carnet">+</button>
+    </div>
+    
+    <!-- Liste des carnets filtrés -->
+    <div id="notebook-list" class="notebook-list">
+        <div class="placeholder-text">Veuillez patienter...</div>
+    </div>
+  </section>
+
+  <!-- FORMAT TOGGLE -->
+  <section class="format-section">
+    <label>Format d'import</label>
+    <div class="format-toggle" id="format-toggle">
+      <button class="format-btn active" data-format="pdf" title="Images intégrées, mise en page visuelle">📄 PDF</button>
+      <button class="format-btn" data-format="md" title="Tables parfaites, ultra-léger, natif Gemini">📝 Markdown</button>
+      <button class="format-btn" data-format="url" title="Import instantané — NotebookLM scrape la page">🔗 URL</button>
+    </div>
+  </section>
+
+  <!-- ACTION PRINCIPALE -->
+  <section class="action-section">
+    <button id="btn-capture" class="btn primary-btn" disabled>
+      <span class="btn-text">Capturer la page</span>
+      <span id="btn-spinner" class="spinner hidden"></span>
+    </button>
+  </section>
+
+  <!-- ZONE DE STATUT / INDICATEURS -->
+  <footer class="app-footer">
+    <div id="status-message" class="status-message">Prêt</div>
+  </footer>
+
+  <script src="popup.js"></script>
+</body>
+</html>

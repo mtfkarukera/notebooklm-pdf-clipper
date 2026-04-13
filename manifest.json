@@ -1,0 +1,54 @@
+{
+  "manifest_version": 3,
+  "name": "NotebookLM Web Clipper",
+  "version": "3.3.0",
+  "description": "Capturez le contenu structuré d'une page web et importez-le en PDF dans Google NotebookLM — optimisé pour l'analyse IA.",
+  "browser_specific_settings": {
+    "gecko": {
+      "id": "notebooklm-web-clipper@mtfkarukera",
+      "strict_min_version": "142.0",
+      "data_collection_permissions": {
+        "required": ["none"]
+      }
+    }
+  },
+  "permissions": [
+    "storage",
+    "cookies",
+    "identity",
+    "activeTab",
+    "notifications",
+    "downloads"
+  ],
+  "host_permissions": [
+    "<all_urls>"
+  ],
+  "background": {
+    "scripts": ["src/background/background.js"],
+    "type": "module"
+  },
+  "icons": {
+    "48": "icons/icon.svg",
+    "128": "icons/icon.svg"
+  },
+  "action": {
+    "default_icon": "icons/icon.svg",
+    "default_popup": "src/popup/popup.html",
+    "default_title": "Clip to NotebookLM"
+  },
+  "content_scripts": [
+    {
+      "matches": ["<all_urls>"],
+      "js": [
+        "lib/jspdf.umd.min.js",
+        "lib/Readability.js",
+        "src/shared/utils.js",
+        "src/content/serializer.js",
+        "src/content/pdf_generator.js",
+        "src/content/md_generator.js",
+        "src/content/orchestrator.js"
+      ],
+      "run_at": "document_end"
+    }
+  ]
+}

@@ -1,0 +1,23 @@
+# OS
+.DS_Store
+Thumbs.db
+
+# Build
+dist/
+
+# IDE
+*.code-workspace
+.vscode/
+.idea/
+
+# Agents & directives
+.agents/
+AGENTS.md
+
+# Dev docs (internes)
+spec.md
+plan.md
+tasks.md
+
+# Libs obsolètes
+lib/html2pdf.bundle.min.js
