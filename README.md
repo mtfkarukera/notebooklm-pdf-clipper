@@ -140,7 +140,7 @@ Avant d'utiliser l'extension, **chaque compte Google** que vous souhaitez utilis
 
 ```bash
 npm install -g web-ext
-cd ~/Scripts/notebooklm-pdf-clipper
+cd notebooklm-pdf-clipper
 web-ext run
 ```
 
