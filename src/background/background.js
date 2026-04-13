@@ -13,6 +13,134 @@ let lastCaptureData = null;    // base64 PDF ou texte Markdown
 let lastCaptureFilename = null;
 let lastCaptureFormat = null;  // "pdf" ou "md"
 
+/**
+ * Types de fichiers supportés pour l'Import Direct.
+ * Liste complète des formats acceptés par NotebookLM.
+ * Mapping MIME type → { label, extension, category }
+ */
+const DIRECT_IMPORT_TYPES = {
+    // Documents
+    'application/pdf':                                              { label: 'PDF',   ext: '.pdf',  category: 'document' },
+    'text/plain':                                                   { label: 'TXT',   ext: '.txt',  category: 'document' },
+    'text/markdown':                                                { label: 'MD',    ext: '.md',   category: 'document' },
+    'text/csv':                                                     { label: 'CSV',   ext: '.csv',  category: 'document' },
+    'application/vnd.openxmlformats-officedocument.wordprocessingml.document': { label: 'DOCX', ext: '.docx', category: 'document' },
+    'application/vnd.openxmlformats-officedocument.presentationml.presentation': { label: 'PPTX', ext: '.pptx', category: 'document' },
+    'application/epub+zip':                                         { label: 'EPUB',  ext: '.epub', category: 'document' },
+    // Images
+    'image/png':        { label: 'PNG',   ext: '.png',  category: 'image' },
+    'image/jpeg':       { label: 'JPEG',  ext: '.jpg',  category: 'image' },
+    'image/gif':        { label: 'GIF',   ext: '.gif',  category: 'image' },
+    'image/bmp':        { label: 'BMP',   ext: '.bmp',  category: 'image' },
+    'image/webp':       { label: 'WebP',  ext: '.webp', category: 'image' },
+    'image/avif':       { label: 'AVIF',  ext: '.avif', category: 'image' },
+    'image/tiff':       { label: 'TIFF',  ext: '.tiff', category: 'image' },
+    'image/x-icon':     { label: 'ICO',   ext: '.ico',  category: 'image' },
+    'image/jp2':        { label: 'JP2',   ext: '.jp2',  category: 'image' },
+    'image/heic':       { label: 'HEIC',  ext: '.heic', category: 'image' },
+    'image/heif':       { label: 'HEIF',  ext: '.heif', category: 'image' },
+    // Audio
+    'audio/mpeg':       { label: 'MP3',   ext: '.mp3',  category: 'audio' },
+    'audio/wav':        { label: 'WAV',   ext: '.wav',  category: 'audio' },
+    'audio/x-wav':      { label: 'WAV',   ext: '.wav',  category: 'audio' },
+    'audio/ogg':        { label: 'OGG',   ext: '.ogg',  category: 'audio' },
+    'audio/aac':        { label: 'AAC',   ext: '.aac',  category: 'audio' },
+    'audio/mp4':        { label: 'M4A',   ext: '.m4a',  category: 'audio' },
+    'audio/x-m4a':      { label: 'M4A',   ext: '.m4a',  category: 'audio' },
+    'audio/aiff':       { label: 'AIFF',  ext: '.aiff', category: 'audio' },
+    'audio/x-aiff':     { label: 'AIFF',  ext: '.aiff', category: 'audio' },
+    'audio/midi':       { label: 'MIDI',  ext: '.mid',  category: 'audio' },
+    'audio/x-midi':     { label: 'MIDI',  ext: '.mid',  category: 'audio' },
+    'audio/opus':       { label: 'OPUS',  ext: '.opus', category: 'audio' },
+    'audio/amr':        { label: 'AMR',   ext: '.amr',  category: 'audio' },
+    'audio/x-ms-wma':   { label: 'WMA',   ext: '.wma',  category: 'audio' },
+    'audio/x-pn-realaudio': { label: 'RA', ext: '.ra',  category: 'audio' },
+    'audio/basic':      { label: 'AU',    ext: '.au',   category: 'audio' },
+    // Vidéo
+    'video/mp4':        { label: 'MP4',   ext: '.mp4',  category: 'video' },
+    'video/mpeg':       { label: 'MPEG',  ext: '.mpeg', category: 'video' },
+    'video/x-msvideo':  { label: 'AVI',   ext: '.avi',  category: 'video' },
+    'video/3gpp':       { label: '3GP',   ext: '.3gp',  category: 'video' },
+    'video/3gpp2':      { label: '3G2',   ext: '.3g2',  category: 'video' },
+};
+
+/**
+ * Mapping extension → MIME type pour la détection par URL (fichiers locaux surtout).
+ */
+const EXT_TO_MIME = {
+    // Documents
+    'pdf': 'application/pdf', 'txt': 'text/plain', 'md': 'text/markdown',
+    'csv': 'text/csv', 'docx': 'application/vnd.openxmlformats-officedocument.wordprocessingml.document',
+    'pptx': 'application/vnd.openxmlformats-officedocument.presentationml.presentation',
+    'epub': 'application/epub+zip',
+    // Images
+    'png': 'image/png', 'jpg': 'image/jpeg', 'jpeg': 'image/jpeg', 'jpe': 'image/jpeg',
+    'gif': 'image/gif', 'bmp': 'image/bmp', 'webp': 'image/webp', 'avif': 'image/avif',
+    'tif': 'image/tiff', 'tiff': 'image/tiff', 'ico': 'image/x-icon',
+    'jp2': 'image/jp2', 'heic': 'image/heic', 'heif': 'image/heif',
+    // Audio
+    'mp3': 'audio/mpeg', 'wav': 'audio/wav', 'ogg': 'audio/ogg', 'aac': 'audio/aac',
+    'm4a': 'audio/mp4', 'aif': 'audio/aiff', 'aifc': 'audio/aiff', 'aiff': 'audio/aiff',
+    'mid': 'audio/midi', 'opus': 'audio/opus', 'amr': 'audio/amr', 'wma': 'audio/x-ms-wma',
+    'ra': 'audio/x-pn-realaudio', 'ram': 'audio/x-pn-realaudio', 'au': 'audio/basic',
+    'snd': 'audio/basic', 'cda': 'audio/mpeg',
+    // Vidéo
+    'mp4': 'video/mp4', 'mpeg': 'video/mpeg', 'avi': 'video/x-msvideo',
+    '3gp': 'video/3gpp', '3g2': 'video/3gpp2',
+};
+
+/** Regex d'extensions pour la détection rapide par URL */
+const SUPPORTED_EXT_REGEX = /\.(pdf|txt|md|docx|csv|pptx|epub|avif|bmp|gif|ico|jp2|png|webp|tif|tiff|heic|heif|jpe?g|3g2|3gp|aac|aif|aifc|aiff|amr|au|avi|cda|m4a|mid|mp3|mp4|mpeg|ogg|opus|ra|ram|snd|wav|wma)$/i;
+
+/**
+ * Détecte si une URL pointe vers un fichier directement importable.
+ * Combine l'analyse de l'extension URL + requête HEAD pour confirmer le MIME type.
+ */
+async function detectFileType(url) {
+    // Ne pas analyser les pages non-HTTP (about:, moz-extension:, etc.)
+    if (!url || (!url.startsWith('http://') && !url.startsWith('https://') && !url.startsWith('file://'))) {
+        return { directImport: false };
+    }
+
+    const isLocal = url.startsWith('file://');
+
+    // 1. Heuristique rapide : extension URL
+    const urlPath = new URL(url).pathname.toLowerCase();
+    const extMatch = urlPath.match(SUPPORTED_EXT_REGEX);
+
+    // 2. Pour les URLs HTTP, confirmer via HEAD request
+    let detectedMime = null;
+    if (!isLocal && url.startsWith('http')) {
+        try {
+            const headResp = await fetch(url, { method: 'HEAD', redirect: 'follow' });
+            const contentType = headResp.headers.get('content-type') || '';
+            // Extraire le MIME principal (avant le ;charset=...)
+            detectedMime = contentType.split(';')[0].trim().toLowerCase();
+        } catch (e) {
+            console.warn('[Background] HEAD request échouée:', e.message);
+        }
+    }
+
+    // 3. Tenter de résoudre à partir de l'extension si HEAD n'a rien donné
+    if (!detectedMime && extMatch) {
+        detectedMime = EXT_TO_MIME[extMatch[1].toLowerCase()];
+    }
+
+    // 4. Vérifier si le type est supporté
+    if (detectedMime && DIRECT_IMPORT_TYPES[detectedMime]) {
+        const typeInfo = DIRECT_IMPORT_TYPES[detectedMime];
+        return {
+            directImport: true,
+            mimeType: detectedMime,
+            label: typeInfo.label,
+            category: typeInfo.category,
+            isLocal: isLocal
+        };
+    }
+    
+    return { directImport: false };
+}
+
 // Routeur Principal recevant les messages de la Popup et du Content Script
 browser.runtime.onMessage.addListener((message, sender, sendResponse) => {
     
@@ -164,6 +292,62 @@ browser.runtime.onMessage.addListener((message, sender, sendResponse) => {
         return true;
     }
 
+    // Détection du type de fichier pour l'Import Direct
+    if (message.action === "DETECT_FILE_TYPE") {
+        detectFileType(message.url).then(result => {
+            sendResponse(result);
+        }).catch(() => {
+            sendResponse({ directImport: false });
+        });
+        return true;
+    }
+
+    // Upload d'un fichier local sélectionné via le file picker de la popup
+    if (message.action === "UPLOAD_FILE_PICKER") {
+        (async () => {
+            try {
+                notifyUI("STATUS_UPDATE", { text: "⚡ Upload du fichier...", status: "info" });
+                
+                const cookieString = await getPersonalAuthCookies();
+                const data = await browser.storage.local.get('nblm_active_authuser');
+                const activeIndex = data.nblm_active_authuser !== undefined ? data.nblm_active_authuser : 0;
+                await fetchCSRFToken(cookieString, activeIndex);
+                
+                // Convertir le data URI en Blob
+                const base64 = message.fileDataUri.split(',')[1];
+                const mimeType = message.fileDataUri.match(/^data:([^;]+)/)?.[1] || 'application/octet-stream';
+                const binaryStr = atob(base64);
+                const bytes = new Uint8Array(binaryStr.length);
+                for (let i = 0; i < binaryStr.length; i++) {
+                    bytes[i] = binaryStr.charCodeAt(i);
+                }
+                const blob = new Blob([bytes], { type: mimeType });
+                
+                await uploadFileBlob(message.notebookId, blob, message.filename, activeIndex);
+                
+                const notebookUrl = `https://notebooklm.google.com/notebook/${message.notebookId}`;
+                notifyUI("STATUS_UPDATE", { 
+                    text: "✅ Fichier importé !", 
+                    status: "success",
+                    linkUrl: notebookUrl,
+                    showDownload: false
+                });
+                
+                // Notification OS
+                browser.notifications.create({
+                    type: "basic",
+                    iconUrl: browser.runtime.getURL("icons/icon.svg"),
+                    title: "NotebookLM Web Clipper",
+                    message: `"${message.filename}" importé avec succès !`
+                });
+            } catch (err) {
+                console.error("[Background] Échec upload fichier picker:", err.message);
+                notifyUI("STATUS_UPDATE", { text: err.message, status: "error" });
+            }
+        })();
+        return true;
+    }
+
     if (message.action === "START_CAPTURE") {
         executeCaptureAndUploadWorkflow(message.notebookId, message.format || "pdf")
             .catch(err => {
@@ -223,7 +407,65 @@ async function executeCaptureAndUploadWorkflow(targetNotebookId, format) {
     if (!finalNotebookId) throw new Error("Échec de la récupération de l'ID du carnet.");
 
     // 4. ROUTING selon le format
-    if (format === "url") {
+    if (format === "screenshot") {
+        // ═══ Pipeline Screenshot : captureVisibleTab → PNG → upload ═══
+        notifyUI("STATUS_UPDATE", { text: "📸 Capture du viewport...", status: "info" });
+        
+        const dataUrl = await browser.tabs.captureVisibleTab(null, { format: 'png' });
+        
+        // Convertir data URL → Blob
+        const base64 = dataUrl.split(',')[1];
+        const binaryStr = atob(base64);
+        const bytes = new Uint8Array(binaryStr.length);
+        for (let i = 0; i < binaryStr.length; i++) {
+            bytes[i] = binaryStr.charCodeAt(i);
+        }
+        const pngBlob = new Blob([bytes], { type: 'image/png' });
+        const screenshotFilename = `${cleanTitle}.png`;
+        
+        notifyUI("STATUS_UPDATE", { text: "📸 Upload du screenshot...", status: "info" });
+        await uploadFileBlob(finalNotebookId, pngBlob, screenshotFilename, activeIndex);
+        
+        const notebookUrl = `https://notebooklm.google.com/notebook/${finalNotebookId}`;
+        notifyUI("STATUS_UPDATE", { 
+            text: "✅ Screenshot importé !", 
+            status: "success",
+            linkUrl: notebookUrl,
+            showDownload: false
+        });
+
+    } else if (format === "direct") {
+        // ═══ Pipeline Import Direct : fetch binaire → upload ═══
+        notifyUI("STATUS_UPDATE", { text: "⚡ Téléchargement du fichier...", status: "info" });
+        
+        const fileResponse = await fetch(pageUrl);
+        if (!fileResponse.ok) throw new Error(`Échec téléchargement: HTTP ${fileResponse.status}`);
+        
+        const fileBlob = await fileResponse.blob();
+        const mimeType = fileBlob.type || 'application/octet-stream';
+        
+        // Déterminer l'extension à partir du MIME type (via le mapping global)
+        const typeInfo = DIRECT_IMPORT_TYPES[mimeType];
+        const ext = typeInfo ? typeInfo.ext : '';
+        const directFilename = `${cleanTitle}${ext}`;
+        
+        // Vérifier la taille
+        if (fileBlob.size > 200 * 1024 * 1024) {
+            throw new Error("Upload refusé : Le fichier dépasse la limite de 200 MB.");
+        }
+        
+        notifyUI("STATUS_UPDATE", { text: `⚡ Upload du ${ext.replace('.','').toUpperCase() || 'fichier'}...`, status: "info" });
+        await uploadFileBlob(finalNotebookId, fileBlob, directFilename, activeIndex);
+        
+        const notebookUrl = `https://notebooklm.google.com/notebook/${finalNotebookId}`;
+        notifyUI("STATUS_UPDATE", { 
+            text: `✅ Fichier importé directement !`, 
+            status: "success",
+            linkUrl: notebookUrl,
+            showDownload: false
+        });
+
+    } else if (format === "url") {
         // ═══ Pipeline URL : injection directe, zéro content script ═══
         // Détection YouTube → pipeline natif (transcript + vidéo)
         const isYouTube = /(?:youtube\.com\/watch|youtu\.be\/|youtube\.com\/shorts\/)/.test(pageUrl);
@@ -297,11 +539,117 @@ async function executeCaptureAndUploadWorkflow(targetNotebookId, format) {
     }
     
     // Notification OS si la popup a été fermée
-    const formatLabels = { pdf: "PDF", md: "Markdown", url: "URL" };
+    const formatLabels = { pdf: "PDF", md: "Markdown", url: "URL", screenshot: "Screenshot", direct: "Import direct" };
     browser.notifications.create({
         type: "basic",
         iconUrl: browser.runtime.getURL("icons/icon.svg"),
         title: "NotebookLM Web Clipper",
         message: `"${cleanTitle}" ajouté en ${formatLabels[format] || format} avec succès !`
     });
+}
+
+/**
+ * Upload générique d'un Blob (fichier binaire) vers NotebookLM.
+ * Réutilise le protocole resumable 3 étapes (o4cbdc → start → upload+finalize).
+ * Utilisé par : Import Direct (PDF, images, audio, texte) et Screenshot (PNG).
+ *
+ * @param {string} notebookId - ID du carnet cible.
+ * @param {Blob} blob - Blob binaire du fichier.
+ * @param {string} filename - Nom du fichier avec extension.
+ * @param {number} authuserIndex - Index du compte Google actif.
+ */
+async function uploadFileBlob(notebookId, blob, filename, authuserIndex = 0) {
+    console.log(`[NotebookLM RPC] Upload fichier: ${filename} (${Math.round(blob.size / 1024)} Ko)`);
+    
+    const data = await browser.storage.local.get(['nblm_personal_cookie', 'nblm_csrf']);
+    if (!data.nblm_personal_cookie || !data.nblm_csrf) {
+        throw new Error("Authentification personnelle non finalisée.");
+    }
+
+    // Étape 1 : Enregistrer l'intention de source (RPC o4cbdc)
+    const { sendBatchExecute } = await import('./api/rpc_client.js');
+    const registerRpcId = "o4cbdc";
+    const registerParams = [
+        [[filename]],
+        notebookId,
+        [2],
+        [1, null, null, null, null, null, null, null, null, null, [1]]
+    ];
+    
+    const registerResult = await sendBatchExecute(registerRpcId, registerParams, authuserIndex);
+    
+    // Extraire le SOURCE_ID
+    const sourceId = extractFirstStringFromResult(registerResult);
+    if (!sourceId) {
+        throw new Error("Échec enregistrement source: impossible d'obtenir SOURCE_ID.");
+    }
+    console.log(`[NotebookLM RPC] Étape 1 ✅ SOURCE_ID: ${sourceId.substring(0, 20)}...`);
+
+    // Étape 2 : Démarrer le upload resumable
+    const uploadStartUrl = `https://notebooklm.google.com/upload/_/?authuser=${authuserIndex}`;
+    const startBody = JSON.stringify({
+        "PROJECT_ID": notebookId,
+        "SOURCE_NAME": filename,
+        "SOURCE_ID": sourceId
+    });
+    
+    const startResponse = await fetch(uploadStartUrl, {
+        method: 'POST',
+        headers: {
+            'Accept': '*/*',
+            'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8',
+            'Cookie': data.nblm_personal_cookie,
+            'Origin': 'https://notebooklm.google.com',
+            'Referer': 'https://notebooklm.google.com/',
+            'x-goog-authuser': String(authuserIndex),
+            'x-goog-upload-command': 'start',
+            'x-goog-upload-header-content-length': String(blob.size),
+            'x-goog-upload-protocol': 'resumable'
+        },
+        body: startBody
+    });
+    
+    if (!startResponse.ok) {
+        throw new Error(`Échec démarrage upload: HTTP ${startResponse.status}`);
+    }
+    
+    const uploadUrl = startResponse.headers.get('x-goog-upload-url');
+    if (!uploadUrl) {
+        throw new Error("Échec: pas de x-goog-upload-url dans la réponse serveur.");
+    }
+    console.log(`[NotebookLM RPC] Étape 2 ✅ Upload URL obtenue.`);
+
+    // Étape 3 : Upload du fichier + finalize
+    const finalizeResponse = await fetch(uploadUrl, {
+        method: 'POST',
+        headers: {
+            'Accept': '*/*',
+            'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8',
+            'Cookie': data.nblm_personal_cookie,
+            'Origin': 'https://notebooklm.google.com',
+            'Referer': 'https://notebooklm.google.com/',
+            'x-goog-authuser': String(authuserIndex),
+            'x-goog-upload-command': 'upload, finalize',
+            'x-goog-upload-offset': '0'
+        },
+        body: blob
+    });
+    
+    if (!finalizeResponse.ok) {
+        throw new Error(`Échec upload fichier: HTTP ${finalizeResponse.status}`);
+    }
+    
+    console.log(`[NotebookLM RPC] Étape 3 ✅ Fichier uploadé et finalisé !`);
+    return true;
+}
+
+/**
+ * Utilitaire : extraire la première string d'une structure imbriquée
+ */
+function extractFirstStringFromResult(data) {
+    if (typeof data === 'string') return data;
+    if (Array.isArray(data) && data.length > 0) {
+        return extractFirstStringFromResult(data[0]);
+    }
+    return null;
 }

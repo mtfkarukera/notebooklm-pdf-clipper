@@ -32,8 +32,8 @@ header, section, footer {
   backdrop-filter: blur(10px);
   border: 1px solid var(--border-color);
   border-radius: var(--radius-md);
-  padding: 10px 12px;
-  margin-bottom: 8px;
+  padding: 8px 10px;
+  margin-bottom: 6px;
   box-shadow: 0 4px 6px rgba(0,0,0,0.02);
 }
 
@@ -134,10 +134,10 @@ input[type="text"]:focus {
 }
 .format-btn {
   flex: 1;
-  padding: 8px 12px;
+  padding: 6px 8px;
   border: none;
   background: #fff;
-  font-size: 13px;
+  font-size: 12px;
   font-weight: 500;
   color: var(--text-muted);
   cursor: pointer;
@@ -154,6 +154,76 @@ input[type="text"]:focus {
 .format-btn.active {
   background: var(--primary-color);
   color: #fff;
+}
+
+/* Direct Import Section */
+.direct-import-section {
+  margin-top: 8px;
+  animation: slideDown 0.25s ease-out;
+}
+@keyframes slideDown {
+  from { opacity: 0; transform: translateY(-6px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+.format-btn-direct {
+  width: 100%;
+  padding: 8px 12px;
+  border: 2px solid #1e8e3e !important;
+  border-radius: var(--radius-sm) !important;
+  background: #e8f5e9 !important;
+  color: #1e8e3e !important;
+  font-weight: 600 !important;
+  cursor: pointer;
+  transition: background 0.15s, color 0.15s;
+  text-align: center;
+}
+.format-btn-direct:hover {
+  background: #1e8e3e !important;
+  color: #fff !important;
+}
+.format-btn-direct.active {
+  background: #1e8e3e !important;
+  color: #fff !important;
+  border-color: #1e8e3e !important;
+}
+
+/* Disabled state for format buttons */
+.format-btn.btn-disabled {
+  opacity: 0.35;
+  cursor: not-allowed;
+  pointer-events: none;
+}
+
+/* File picker for local files */
+.file-picker-section {
+  margin-top: 8px;
+}
+.file-picker-label {
+  display: block;
+  width: 100%;
+  padding: 8px 12px;
+  border: 2px dashed #1e8e3e;
+  border-radius: var(--radius-sm);
+  background: #e8f5e9;
+  color: #1e8e3e;
+  font-weight: 600;
+  font-size: 13px;
+  text-align: center;
+  cursor: pointer;
+  transition: background 0.15s, color 0.15s;
+  box-sizing: border-box;
+}
+.file-picker-label:hover {
+  background: #1e8e3e;
+  color: #fff;
+}
+.file-picker-name {
+  display: block;
+  margin-top: 4px;
+  font-size: 11px;
+  color: var(--text-muted);
+  text-align: center;
+  word-break: break-all;
 }
 
 /* Buttons */

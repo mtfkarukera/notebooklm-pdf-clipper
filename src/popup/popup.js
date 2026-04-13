@@ -9,11 +9,21 @@ const uiAuthStatus = document.getElementById('auth-status');
 const btnCustomSpinner = document.getElementById('btn-spinner');
 const btnCreateNotebook = document.getElementById('btn-create-notebook');
 const uiFormatToggle = document.getElementById('format-toggle');
+const uiDirectImportSection = document.getElementById('direct-import-section');
+const btnDirectImport = document.getElementById('btn-direct-import');
+const uiDirectLabel = document.getElementById('direct-label');
+const uiFilePickerSection = document.getElementById('file-picker-section');
+const filePickerInput = document.getElementById('file-picker-input');
+const filePickerName = document.getElementById('file-picker-name');
+const filePickerLabel = document.getElementById('file-picker-label');
 
 // Variables d'état
 let currentSelectedNotebookId = null;
 let allNotebooksCache = [];
-let currentFormat = "pdf"; // "pdf", "md" ou "url"
+let currentFormat = "pdf"; // "pdf", "md", "url", "screenshot" ou "direct"
+let detectedFileInfo = null; // { directImport, mimeType, label, category, isLocal }
+let pickedFileDataUri = null; // File picker : data URI du fichier sélectionné
+let pickedFileName = null;   // File picker : nom du fichier sélectionné
 
 // Helper : créer un placeholder textuel sécurisé (remplace innerHTML)
 function setPlaceholder(container, text, style) {
@@ -64,34 +74,69 @@ document.addEventListener('DOMContentLoaded', () => {
   }).catch(e => {
      updateAuthStatus("Déconnecté", "status-error");
      setPlaceholder(uiNotebookList, "Erreur d'authentification.");
-  });
-  
-  uiSearchInput.addEventListener('input', debounce((e) => {
-    filterNotebooks(e.target.value);
-  }, 300));
-  
-  btnCapture.addEventListener('click', startCaptureProcess);
-  
-  // Bouton "+" : Crée un carnet avec le texte du champ de recherche
-  btnCreateNotebook.addEventListener('click', createNewNotebook);
+   });
+   
+   uiSearchInput.addEventListener('input', debounce((e) => {
+     filterNotebooks(e.target.value);
+   }, 300));
+   
+   btnCapture.addEventListener('click', startCaptureProcess);
+   
+   // Bouton "+" : Crée un carnet avec le texte du champ de recherche
+   btnCreateNotebook.addEventListener('click', createNewNotebook);
 
-  // Toggle format PDF / Markdown / URL
-  uiFormatToggle.addEventListener('click', (e) => {
-    const btn = e.target.closest('.format-btn');
-    if (!btn || btn.classList.contains('active')) return;
+   // Toggle format PDF / Markdown / URL / Screenshot
+   uiFormatToggle.addEventListener('click', (e) => {
+     const btn = e.target.closest('.format-btn');
+     if (!btn || btn.classList.contains('active') || btn.classList.contains('btn-disabled')) return;
 
-    uiFormatToggle.querySelectorAll('.format-btn').forEach(b => b.classList.remove('active'));
-    btn.classList.add('active');
-    currentFormat = btn.dataset.format;
+     // Désélectionner tous les boutons (format toggle + direct)
+     uiFormatToggle.querySelectorAll('.format-btn').forEach(b => b.classList.remove('active'));
+     if (btnDirectImport) btnDirectImport.classList.remove('active');
+     
+     btn.classList.add('active');
+     currentFormat = btn.dataset.format;
+     updateCaptureButtonLabel();
+   });
 
-    // Adapter le texte du bouton de capture
-    const btnText = btnCapture.querySelector('.btn-text');
-    if (currentFormat === 'url') {
-      btnText.textContent = "Importer l'URL";
-    } else {
-      btnText.textContent = 'Capturer la page';
-    }
-  });
+   // Bouton Import Direct (séparé du toggle principal)
+   if (btnDirectImport) {
+     btnDirectImport.addEventListener('click', () => {
+       if (btnDirectImport.classList.contains('active')) return;
+       
+       // Désélectionner les boutons du toggle principal
+       uiFormatToggle.querySelectorAll('.format-btn').forEach(b => b.classList.remove('active'));
+       btnDirectImport.classList.add('active');
+       currentFormat = 'direct';
+       updateCaptureButtonLabel();
+     });
+   }
+
+   // File picker : lecture du fichier sélectionné
+   if (filePickerInput) {
+     filePickerInput.addEventListener('change', (e) => {
+       const file = e.target.files[0];
+       if (!file) return;
+       
+       pickedFileName = file.name;
+       filePickerName.textContent = file.name;
+       
+       // Lire le fichier en data URI
+       const reader = new FileReader();
+       reader.onload = (evt) => {
+         pickedFileDataUri = evt.target.result;
+         // Activer le bouton d'import si un carnet est sélectionné
+         if (currentSelectedNotebookId) {
+           btnCapture.disabled = false;
+         }
+         updateCaptureButtonLabel();
+       };
+       reader.readAsDataURL(file);
+     });
+   }
+
+   // Détection du type de fichier pour l'Import Direct
+   detectActiveTabFileType();
 });
 
 function loadNotebooks() {
@@ -192,24 +237,150 @@ async function createNewNotebook() {
 }
 
 function startCaptureProcess() {
-  if (!currentSelectedNotebookId) {
-    updateStatus("Veuillez d'abord sélectionner un carnet.", "error");
-    return;
-  }
+   if (!currentSelectedNotebookId) {
+     updateStatus("Veuillez d'abord sélectionner un carnet.", "error");
+     return;
+   }
 
-  btnCapture.disabled = true;
-  uiSearchInput.disabled = true;
-  btnCustomSpinner.classList.remove('hidden');
+   // Mode fichier local : envoyer le fichier du picker
+   if (currentFormat === 'direct' && detectedFileInfo?.isLocal) {
+     if (!pickedFileDataUri || !pickedFileName) {
+       updateStatus("Veuillez d'abord sélectionner un fichier.", "error");
+       return;
+     }
+     
+     btnCapture.disabled = true;
+     uiSearchInput.disabled = true;
+     btnCustomSpinner.classList.remove('hidden');
+     updateStatus("⚡ Import du fichier local...", "info");
+     
+     browser.runtime.sendMessage({
+       action: "UPLOAD_FILE_PICKER",
+       notebookId: currentSelectedNotebookId,
+       fileDataUri: pickedFileDataUri,
+       filename: pickedFileName
+     });
+     return;
+   }
 
-  const formatLabels = { pdf: 'PDF', md: 'Markdown', url: 'URL' };
-  const label = formatLabels[currentFormat] || currentFormat;
-  updateStatus(`Import en ${label}...`, "info");
+   btnCapture.disabled = true;
+   uiSearchInput.disabled = true;
+   btnCustomSpinner.classList.remove('hidden');
 
-  browser.runtime.sendMessage({ 
-    action: "START_CAPTURE", 
-    notebookId: currentSelectedNotebookId,
-    format: currentFormat
-  });
+   const formatLabels = { pdf: 'PDF', md: 'Markdown', url: 'URL', screenshot: 'Screenshot', direct: 'Import direct' };
+   const label = formatLabels[currentFormat] || currentFormat;
+   updateStatus(`Import en ${label}...`, "info");
+
+   browser.runtime.sendMessage({ 
+     action: "START_CAPTURE", 
+     notebookId: currentSelectedNotebookId,
+     format: currentFormat
+   });
+}
+
+/**
+ * Met à jour le libellé du bouton principal selon le format sélectionné.
+ */
+function updateCaptureButtonLabel() {
+   const btnText = btnCapture.querySelector('.btn-text');
+   if (currentFormat === 'direct' && detectedFileInfo?.isLocal) {
+     // Mode fichier local : le bouton upload le fichier du picker
+     btnText.textContent = pickedFileDataUri ? '⚡ Importer le fichier' : '⚡ Sélectionnez un fichier';
+   } else {
+     const labels = {
+       pdf: 'Capturer la page',
+       md: 'Capturer la page',
+       url: "Importer l'URL",
+       screenshot: '📸 Capturer le viewport',
+       direct: 'Importer'
+     };
+     btnText.textContent = labels[currentFormat] || 'Capturer la page';
+   }
+}
+
+/**
+ * Détecte si l'onglet actif affiche un fichier directement importable.
+ * Active/désactive les boutons en conséquence.
+ */
+async function detectActiveTabFileType() {
+   try {
+     const tabs = await browser.tabs.query({ active: true, currentWindow: true });
+     if (tabs.length === 0) return;
+
+     const url = tabs[0].url;
+     const result = await browser.runtime.sendMessage({ action: "DETECT_FILE_TYPE", url });
+     detectedFileInfo = result;
+
+     if (result && result.directImport) {
+       // Afficher le bouton Import Direct avec le label du type détecté
+       uiDirectLabel.textContent = `Import direct (${result.label})`;
+       uiDirectImportSection.classList.remove('hidden');
+
+       if (result.isLocal) {
+         // === Fichier local : afficher le file picker, masquer le bouton direct ===
+         btnDirectImport.classList.add('hidden');
+         uiFilePickerSection.classList.remove('hidden');
+         filePickerLabel.textContent = `📂 Sélectionner le ${result.label}`;
+         
+         // Griser TOUS les boutons de format (rien ne marche sur file://)
+         uiFormatToggle.querySelectorAll('.format-btn').forEach(b => {
+           b.classList.add('btn-disabled');
+           b.classList.remove('active');
+         });
+         
+         // Pré-sélectionner le format direct
+         currentFormat = 'direct';
+         updateCaptureButtonLabel();
+       } else {
+         // === Fichier distant : bouton Import Direct normal ===
+         applyButtonVisibility(result);
+       }
+     }
+   } catch (e) {
+     console.warn('[Popup] Détection fichier échouée:', e.message);
+   }
+}
+
+/**
+ * Applique la matrice de visibilité des boutons selon le type de fichier détecté.
+ * 
+ * Règles :
+ * - Image/Audio/Video : PDF et MD grisés (n'ont pas de sens)
+ * - Audio/Video : Screenshot grisé aussi
+ * - Fichier local (file://) : URL grisé 
+ */
+function applyButtonVisibility(fileInfo) {
+   const pdfBtn = uiFormatToggle.querySelector('[data-format="pdf"]');
+   const mdBtn = uiFormatToggle.querySelector('[data-format="md"]');
+   const urlBtn = uiFormatToggle.querySelector('[data-format="url"]');
+   const screenshotBtn = uiFormatToggle.querySelector('[data-format="screenshot"]');
+
+   // Images : PDF/MD n'ont pas de sens (Readability sur un viewer d'image = garbled)
+   if (fileInfo.category === 'image') {
+     pdfBtn.classList.add('btn-disabled');
+     mdBtn.classList.add('btn-disabled');
+   }
+
+   // Audio/Vidéo : PDF/MD/Screenshot n'ont aucun sens
+   if (fileInfo.category === 'audio' || fileInfo.category === 'video') {
+     pdfBtn.classList.add('btn-disabled');
+     mdBtn.classList.add('btn-disabled');
+     screenshotBtn.classList.add('btn-disabled');
+   }
+
+   // Fichier local : URL grisé (Google ne peut pas scraper file://)
+   if (fileInfo.isLocal) {
+     urlBtn.classList.add('btn-disabled');
+   }
+
+   // Si le format actif est maintenant désactivé, basculer sur Import Direct
+   const activeBtn = uiFormatToggle.querySelector('.format-btn.active');
+   if (activeBtn && activeBtn.classList.contains('btn-disabled')) {
+     activeBtn.classList.remove('active');
+     btnDirectImport.classList.add('active');
+     currentFormat = 'direct';
+     updateCaptureButtonLabel();
+   }
 }
 
 function resetUI() {
