@@ -25,7 +25,7 @@ Capturez le contenu de n'importe quelle page web et importez-le directement dans
 | **Multi-comptes** | Sélecteur de compte Google intégré dans la popup |
 | **Notification OS** | Notification système si la popup est fermée pendant l'import |
 | **Compatible Mobile** | Firefox Android : popup responsive, touch targets 48dp, détection plateforme |
-| **☁️ Google Drive natif** | Import synchronisable de Google Docs, Sheets et Slides — bouton "Sync" préservé |
+| **☁️ Google Drive natif** | Import synchronisable de Google Docs, Sheets, Slides + fichiers hébergés (PDF, images...) |
 
 ### Comparaison des 7 modes
 
@@ -216,6 +216,17 @@ notebooklm-pdf-clipper/
 
 ## 📋 Changelog récent
 
+### v4.6.0 — Fichiers Google Drive
+
+- **☁️ Drive étendu** : import natif des fichiers hébergés sur Google Drive (PDF, images, audio, vidéo, documents Office)
+- **Détection `drive.google.com/file/d/`** : le bouton Drive apparaît aussi sur les fichiers consultés dans le viewer Drive
+- **MIME automatique** : le type MIME est deviné depuis l'extension du nom de fichier dans le titre de l'onglet (fallback: `application/pdf`)
+- **Nettoyage titre** : retrait automatique du suffixe " - Google Drive" pour un grounding propre
+
+### v4.5.1 — Fix payload Google Drive
+
+- **Fix critique** : correction de la structure du payload RPC pour l'import Drive (suppression du wrapper 8-slots hérité de Text/URL, remplacé par le format direct 11-éléments conforme à la cassette VCR `notebooklm-py`)
+
 ### v4.5.0 — Import Google Drive natif
 
 - **☁️ Google Drive** : 7ème mode d'import — liaison synchronisable avec Google Docs, Sheets et Slides
@@ -252,4 +263,4 @@ notebooklm-pdf-clipper/
 ---
 
 *Projet développé selon la méthodologie **Spec-Driven Development (SDD)**.*
-*Version 4.5.0 — Avril 2026*
+*Version 4.6.0 — Avril 2026*

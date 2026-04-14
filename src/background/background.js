@@ -14,6 +14,30 @@ let lastCaptureFilename = null;
 let lastCaptureFormat = null;  // "pdf" ou "md"
 
 /**
+ * Devine le MIME type d'un fichier Drive à partir du titre de l'onglet Firefox.
+ * Format attendu : "nomfichier.ext - Google Drive"
+ */
+function guessMimeFromTitle(title) {
+    const EXTENSION_MAP = {
+        'pdf': 'application/pdf', 'txt': 'text/plain', 'md': 'text/markdown',
+        'csv': 'text/csv', 'epub': 'application/epub+zip',
+        'docx': 'application/vnd.openxmlformats-officedocument.wordprocessingml.document',
+        'pptx': 'application/vnd.openxmlformats-officedocument.presentationml.presentation',
+        'xlsx': 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
+        'png': 'image/png', 'jpg': 'image/jpeg', 'jpeg': 'image/jpeg',
+        'gif': 'image/gif', 'webp': 'image/webp', 'svg': 'image/svg+xml',
+        'mp3': 'audio/mpeg', 'wav': 'audio/wav', 'mp4': 'video/mp4',
+    };
+    const cleaned = title.replace(/\s*-\s*Google Drive\s*$/i, '').trim();
+    const dotIndex = cleaned.lastIndexOf('.');
+    if (dotIndex > 0) {
+        const ext = cleaned.substring(dotIndex + 1).toLowerCase();
+        if (EXTENSION_MAP[ext]) return EXTENSION_MAP[ext];
+    }
+    return 'application/pdf';
+}
+
+/**
  * Types de fichiers supportés pour l'Import Direct.
  * Liste complète des formats acceptés par NotebookLM.
  * Mapping MIME type → { label, extension, category }
@@ -559,23 +583,39 @@ async function executeCaptureAndUploadWorkflow(targetNotebookId, format) {
 
     } else if (format === "drive") {
         // ═══ Pipeline Google Drive NATIF ═══
+        // Supporte : docs.google.com (Docs/Sheets/Slides) ET drive.google.com/file/d/ (fichiers)
         notifyUI("STATUS_UPDATE", { text: "☁️ Liaison avec le Google Drive...", status: "info" });
         
-        let typeStr, fileId, mimeType = '';
-        const match = pageUrl.match(/\/(document|spreadsheets|presentation)\/d\/([a-zA-Z0-9-_]+)/);
-        if (match) {
-            typeStr = match[1];
-            fileId = match[2];
+        let fileId, mimeType = '';
+
+        // Cas 1 : Google Docs/Sheets/Slides (docs.google.com)
+        const workspaceMatch = pageUrl.match(/\/(document|spreadsheets|presentation)\/d\/([a-zA-Z0-9-_]+)/);
+        if (workspaceMatch) {
+            fileId = workspaceMatch[2];
+            const typeStr = workspaceMatch[1];
             if (typeStr === 'document') mimeType = 'application/vnd.google-apps.document';
             else if (typeStr === 'spreadsheets') mimeType = 'application/vnd.google-apps.spreadsheet';
             else if (typeStr === 'presentation') mimeType = 'application/vnd.google-apps.presentation';
+        }
+
+        // Cas 2 : Fichier hébergé sur Drive (drive.google.com/file/d/ID)
+        if (!fileId) {
+            const driveMatch = pageUrl.match(/drive\.google\.com\/file\/d\/([a-zA-Z0-9-_]+)/);
+            if (driveMatch) {
+                fileId = driveMatch[1];
+                // Deviner le MIME via l'extension du titre (ex: "rapport.pdf - Google Drive")
+                mimeType = guessMimeFromTitle(pageTitle);
+            }
         }
 
         if (!fileId) {
             throw new Error("URL Google Drive non reconnue ou invalide.");
         }
 
-        let driveTitle = pageTitle.replace(/ - Google (Docs|Sheets|Slides)/, '').trim();
+        // Nettoyer le titre (retirer les suffixes Google)
+        let driveTitle = pageTitle
+            .replace(/ - Google (Docs|Sheets|Slides|Drive)$/i, '')
+            .trim();
 
         await addDriveSource(finalNotebookId, fileId, mimeType, driveTitle, activeIndex);
 

@@ -312,14 +312,19 @@ export async function addUrlSource(notebookId, url, authuserIndex = 0) {
 export async function addDriveSource(notebookId, fileId, mimeType, title, authuserIndex = 0) {
     const rpcId = "izAoDd";
     
-    // Le bloc Google Drive est au slot 0 (vs slot 1 pour Texte et slot 2 pour URL)
+    // Structure exacte de notebooklm-py : _sources.py::_add_drive_source()
+    // Le bloc Drive est un tableau de 11 éléments (PAS enveloppé dans un wrapper 8-slots
+    // comme Text/URL — c'est la différence clé).
+    // [0] = [fileId, mimeType, 1, title]
+    // [1-9] = null
+    // [10] = 1
     const driveBlock = [
         [fileId, mimeType, 1, title],
         null, null, null, null, null, null, null, null, null, 1
     ];
 
     const params = [
-        [[driveBlock, null, null, null, null, null, null, null]],
+        [driveBlock],
         notebookId,
         [2],
         [1, null, null, null, null, null, null, null, null, null, [1]]
