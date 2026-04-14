@@ -216,21 +216,17 @@ notebooklm-pdf-clipper/
 
 ## 📋 Changelog récent
 
-### v4.6.2 — Screenshot exclusif pour fichiers Drive non supportés
+### v4.7.0 — UX Drive simplifiée + documentation des limitations
 
-- **UX adaptative** : sur un fichier Drive non éligible (image, audio, vidéo), seul le bouton 📸 Screenshot est proposé
-- **Zéro faux positif** : les modes PDF, MD, URL sont masqués car inutiles sur le viewer Drive
-
-### v4.6.1 — Whitelist MIME Drive
-
-- **Filtrage intelligent** : le bouton Drive n'apparaît que pour les fichiers supportés (PDF, DOCX, XLSX, PPTX, TXT, MD, CSV, EPUB)
-- **Images/audio/vidéo exclus** : sur un fichier non supporté, les boutons standard (PDF, MD, URL, Screenshot) restent visibles
+- **Fichiers Drive hébergés** : sur `drive.google.com/file/d/`, les boutons ☁️ Drive + 📸 Screenshot sont visibles (PDF, MD, URL masqués)
+- **Google Workspace** : sur Docs/Sheets/Slides, seul le bouton ☁️ Drive est affiché (inchangé)
+- **Limitation documentée** : la synchronisation Drive ne fonctionne que pour les documents textuels (PDF, DOCX, XLSX, PPTX, Google Docs/Sheets/Slides). Pour les images et médias, utiliser le mode Screenshot.
+- **Simplification** : suppression du filtrage MIME par titre d'onglet (approche fragile remplacée par une UX à deux choix)
 
 ### v4.6.0 — Fichiers Google Drive
 
-- **☁️ Drive étendu** : import natif des fichiers hébergés sur Google Drive (PDF, documents Office)
+- **☁️ Drive étendu** : import natif des fichiers hébergés sur Google Drive
 - **Détection `drive.google.com/file/d/`** : le bouton Drive apparaît sur les fichiers consultés dans le viewer Drive
-- **MIME automatique** : le type MIME est deviné depuis l'extension du nom de fichier dans le titre de l'onglet
 - **Nettoyage titre** : retrait automatique du suffixe " - Google Drive" pour un grounding propre
 
 ### v4.5.1 — Fix payload Google Drive
@@ -273,4 +269,4 @@ notebooklm-pdf-clipper/
 ---
 
 *Projet développé selon la méthodologie **Spec-Driven Development (SDD)**.*
-*Version 4.6.2 — Avril 2026*
+*Version 4.7.0 — Avril 2026*

@@ -307,57 +307,41 @@ async function detectActiveTabFileType() {
 
      const url = tabs[0].url;
 
-     // 1. Détection prioritaire Google Drive
-     if (window.ClipperUtils && window.ClipperUtils.parseDriveUrl) {
-         const driveInfo = window.ClipperUtils.parseDriveUrl(url);
-         if (driveInfo) {
-             // Pour les fichiers hébergés (pas Workspace), vérifier le type
-             if (driveInfo.typeStr === 'file') {
-                 const SUPPORTED_DRIVE_MIMES = [
-                     'application/pdf', 'text/plain', 'text/markdown', 'text/csv',
-                     'application/epub+zip',
-                     'application/vnd.openxmlformats-officedocument.wordprocessingml.document',
-                     'application/vnd.openxmlformats-officedocument.presentationml.presentation',
-                     'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
-                 ];
-                 const guessedMime = window.ClipperUtils.guessMimeFromTitle(tabs[0].title);
-                 if (!SUPPORTED_DRIVE_MIMES.includes(guessedMime)) {
-                     // Fichier non supporté (image, audio, vidéo...)
-                     // → seul le Screenshot a du sens sur le viewer Drive
-                     uiFormatToggle.querySelectorAll('.format-btn').forEach(b => {
-                         b.classList.remove('active');
-                         if (['pdf', 'md', 'url', 'drive'].includes(b.dataset.format)) {
-                             b.style.display = 'none';
-                         }
-                     });
-                     const screenshotBtn = uiFormatToggle.querySelector('[data-format="screenshot"]');
-                     if (screenshotBtn) {
-                         screenshotBtn.style.display = 'flex';
-                         screenshotBtn.classList.add('active');
-                     }
-                     currentFormat = 'screenshot';
-                     updateCaptureButtonLabel();
-                     return;
-                 }
-             }
-             const driveBtn = document.getElementById('btn-drive-import');
-             if (driveBtn) {
-                 driveBtn.style.display = 'flex';
-                 // Cacher complètement les modes inappropriés
-                 uiFormatToggle.querySelectorAll('.format-btn').forEach(b => {
-                     b.classList.remove('active');
-                     if (['pdf', 'md', 'url', 'screenshot'].includes(b.dataset.format)) {
-                         b.style.display = 'none'; // Masquage total selon ta demande
-                     }
-                 });
-                 driveBtn.classList.remove('hidden');
-                 driveBtn.classList.add('active');
-                 currentFormat = 'drive';
-                 updateCaptureButtonLabel();
-                 return; // Arrêter la détection, on est sur Drive
-             }
-         }
-     }
+      // 1. Détection prioritaire Google Drive
+      if (window.ClipperUtils && window.ClipperUtils.parseDriveUrl) {
+          const driveInfo = window.ClipperUtils.parseDriveUrl(url);
+          if (driveInfo) {
+              const driveBtn = document.getElementById('btn-drive-import');
+              if (driveBtn) {
+                  driveBtn.style.display = 'flex';
+                  driveBtn.classList.remove('hidden');
+
+                  if (driveInfo.typeStr === 'file') {
+                      // Fichier hébergé sur Drive → Drive + Screenshot
+                      // (Drive pour les docs textuels, Screenshot pour le reste)
+                      uiFormatToggle.querySelectorAll('.format-btn').forEach(b => {
+                          b.classList.remove('active');
+                          if (['pdf', 'md', 'url'].includes(b.dataset.format)) {
+                              b.style.display = 'none';
+                          }
+                      });
+                  } else {
+                      // Google Workspace (Docs/Sheets/Slides) → Drive exclusif
+                      uiFormatToggle.querySelectorAll('.format-btn').forEach(b => {
+                          b.classList.remove('active');
+                          if (['pdf', 'md', 'url', 'screenshot'].includes(b.dataset.format)) {
+                              b.style.display = 'none';
+                          }
+                      });
+                  }
+
+                  driveBtn.classList.add("active");
+                  currentFormat = "drive";
+                  updateCaptureButtonLabel();
+                  return;
+              }
+          }
+      }
 
      // 2. Fallback pour fichiers réguliers via background script
      const result = await browser.runtime.sendMessage({ action: "DETECT_FILE_TYPE", url });
