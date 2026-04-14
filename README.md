@@ -216,6 +216,11 @@ notebooklm-pdf-clipper/
 
 ## 📋 Changelog récent
 
+### v4.6.2 — Screenshot exclusif pour fichiers Drive non supportés
+
+- **UX adaptative** : sur un fichier Drive non éligible (image, audio, vidéo), seul le bouton 📸 Screenshot est proposé
+- **Zéro faux positif** : les modes PDF, MD, URL sont masqués car inutiles sur le viewer Drive
+
 ### v4.6.1 — Whitelist MIME Drive
 
 - **Filtrage intelligent** : le bouton Drive n'apparaît que pour les fichiers supportés (PDF, DOCX, XLSX, PPTX, TXT, MD, CSV, EPUB)
@@ -268,4 +273,4 @@ notebooklm-pdf-clipper/
 ---
 
 *Projet développé selon la méthodologie **Spec-Driven Development (SDD)**.*
-*Version 4.6.1 — Avril 2026*
+*Version 4.6.2 — Avril 2026*

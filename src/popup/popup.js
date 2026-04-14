@@ -322,7 +322,22 @@ async function detectActiveTabFileType() {
                  ];
                  const guessedMime = window.ClipperUtils.guessMimeFromTitle(tabs[0].title);
                  if (!SUPPORTED_DRIVE_MIMES.includes(guessedMime)) {
-                     return; // Fichier non supporté → boutons standard
+                     // Fichier non supporté (image, audio, vidéo...)
+                     // → seul le Screenshot a du sens sur le viewer Drive
+                     uiFormatToggle.querySelectorAll('.format-btn').forEach(b => {
+                         b.classList.remove('active');
+                         if (['pdf', 'md', 'url', 'drive'].includes(b.dataset.format)) {
+                             b.style.display = 'none';
+                         }
+                     });
+                     const screenshotBtn = uiFormatToggle.querySelector('[data-format="screenshot"]');
+                     if (screenshotBtn) {
+                         screenshotBtn.style.display = 'flex';
+                         screenshotBtn.classList.add('active');
+                     }
+                     currentFormat = 'screenshot';
+                     updateCaptureButtonLabel();
+                     return;
                  }
              }
              const driveBtn = document.getElementById('btn-drive-import');
