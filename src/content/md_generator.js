@@ -13,13 +13,28 @@ window.ClipperMarkdownGenerator = {
    * @param {HTMLElement} container - Container avec CSS Reader Mode + data URI images.
    * @returns {string} Document Markdown complet.
    */
-  generate(container) {
+  generate(container, intentNote = null) {
     console.log("[MD Gen V1] Extraction des blocs structurés...");
 
     const blocks = this._extractBlocks(container);
     console.log(`[MD Gen V1] ${blocks.length} blocs extraits.`);
 
     const lines = [];
+
+    const buildIntentPrefix = (note) => {
+      if (!note) return "";
+      return [
+        "> **[INTENTION DE RECHERCHE]**",
+        `> ${note.split('\n').join('\n> ')}`,
+        ">",
+        ""
+      ].join('\n');
+    };
+
+    const intentPrefix = buildIntentPrefix(intentNote);
+    if (intentPrefix) {
+      lines.push(intentPrefix);
+    }
 
     for (const block of blocks) {
       switch (block.type) {

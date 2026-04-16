@@ -15,6 +15,8 @@ const uiDirectLabel = document.getElementById('direct-label');
 const uiSelectionBanner = document.getElementById('selection-banner');
 const uiSelectionPreview = document.getElementById('selection-text-preview');
 const btnClearSelection = document.getElementById('btn-clear-selection');
+const intentInput = document.getElementById('intent-input');
+const intentCounter = document.getElementById('intent-counter');
 
 // Variables d'état
 let currentSelectedNotebookId = null;
@@ -139,6 +141,13 @@ document.addEventListener('DOMContentLoaded', () => {
 
    // Vérifier s'il y a une sélection en attente (capturée via le menu contextuel)
    checkPendingSelection();
+
+   // Compteur d'intention
+   if (intentInput && intentCounter) {
+     intentInput.addEventListener('input', () => {
+       intentCounter.textContent = `${intentInput.value.length} / 300`;
+     });
+   }
 });
 
 function loadNotebooks() {
@@ -255,7 +264,8 @@ function startCaptureProcess() {
        action: "START_CAPTURE",
        notebookId: currentSelectedNotebookId,
        format: 'selection',
-       selectionData: pendingSelection
+       selectionData: pendingSelection,
+       intentNote: intentInput.value.trim() || null
      });
      
      // Nettoyer la sélection en attente
@@ -275,7 +285,8 @@ function startCaptureProcess() {
    browser.runtime.sendMessage({ 
      action: "START_CAPTURE", 
      notebookId: currentSelectedNotebookId,
-     format: currentFormat
+     format: currentFormat,
+     intentNote: intentInput.value.trim() || null
    });
 }
 
@@ -524,7 +535,13 @@ document.getElementById('btn-close').addEventListener('click', () => {
 browser.runtime.onMessage.addListener((message) => {
   if(message.type === "STATUS_UPDATE") {
     updateStatus(message.text, message.status, message.linkUrl, message.showDownload);
-    if(message.status === "error" || message.status === "success") resetUI();
+    if(message.status === "error" || message.status === "success") {
+      resetUI();
+      if (message.status === "success") {
+        if (intentInput) intentInput.value = "";
+        if (intentCounter) intentCounter.textContent = "0 / 300";
+      }
+    }
   }
 });
 

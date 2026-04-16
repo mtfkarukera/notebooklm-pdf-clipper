@@ -459,7 +459,7 @@ browser.runtime.onMessage.addListener((message, sender, sendResponse) => {
             })();
         } else {
             // Formats classiques : PDF, MD, URL, Screenshot, Direct
-            executeCaptureAndUploadWorkflow(message.notebookId, message.format || "pdf")
+            executeCaptureAndUploadWorkflow(message.notebookId, message.format || "pdf", message.intentNote)
                 .catch(err => {
                     console.error("[Clipper Background] Erreur globale :", err);
                     notifyUI("STATUS_UPDATE", { text: err.message, status: "error" });
@@ -482,7 +482,7 @@ function notifyUI(action, payload) {
 /**
  * Moteur de Séquence Stricte — PDF, Markdown ou URL
  */
-async function executeCaptureAndUploadWorkflow(targetNotebookId, format) {
+async function executeCaptureAndUploadWorkflow(targetNotebookId, format, intentNote = null) {
     
     notifyUI("STATUS_UPDATE", { text: "Récupération Session Personnelle...", status: "info" });
     
@@ -654,7 +654,8 @@ async function executeCaptureAndUploadWorkflow(targetNotebookId, format) {
 
         const response = await browser.tabs.sendMessage(activeTab.id, {
             action: "START_CAPTURE",
-            format: format
+            format: format,
+            intentNote: intentNote ?? null
         });
         if (response?.status !== "SUCCESS") throw new Error("Erreur Content Script : " + response?.error);
         

@@ -14,8 +14,9 @@ browser.runtime.onMessage.addListener((message, sender, sendResponse) => {
   if (message.action === "START_CAPTURE") {
 
     const format = message.format || "pdf";
+    const intentNote = message.intentNote ?? null;
 
-    handleCapture(format)
+    handleCapture(format, intentNote)
       .then(result => sendResponse({
         status: "SUCCESS",
         payload: result,
@@ -47,7 +48,7 @@ browser.runtime.onMessage.addListener((message, sender, sendResponse) => {
   }
 });
 
-async function handleCapture(format) {
+async function handleCapture(format, intentNote = null) {
   console.log(`[Clipper V5.2] ▶ Capture démarrée (format: ${format})...`);
 
   // 1. Quotas (seulement pour PDF, le Markdown est toujours léger)
@@ -66,13 +67,13 @@ async function handleCapture(format) {
   if (format === "md") {
     // 4a. Markdown Generator : texte structuré
     console.log("[Clipper V5.2] 📝 Génération Markdown...");
-    const markdown = window.ClipperMarkdownGenerator.generate(container);
+    const markdown = window.ClipperMarkdownGenerator.generate(container, intentNote);
     console.log(`[Clipper V5.2] ✅ Pipeline MD terminé (${markdown.length} chars)`);
     return markdown;
   } else {
     // 4b. PDF Generator : jsPDF sur le container autonome
     console.log("[Clipper V5.2] 🖨️ Génération PDF (jsPDF)...");
-    const base64Pdf = await window.ClipperPDFGenerator.generate(container);
+    const base64Pdf = await window.ClipperPDFGenerator.generate(container, intentNote);
     console.log(`[Clipper V5.2] ✅ Pipeline PDF terminé (${Math.round(base64Pdf.length / 1024)} Ko)`);
     return base64Pdf;
   }

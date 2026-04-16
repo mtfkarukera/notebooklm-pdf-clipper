@@ -25,7 +25,7 @@ window.ClipperPDFGenerator = {
    * @param {HTMLElement} container - Container avec CSS Reader Mode + data URI images.
    * @returns {Promise<string>} PDF en Base64 Data URI.
    */
-  async generate(container) {
+  async generate(container, intentNote = null) {
     console.log("[PDF Gen V7] Extraction des blocs structurés...");
 
     // Extraire les blocs du container HTML
@@ -73,6 +73,40 @@ window.ClipperPDFGenerator = {
       doc.line(m, y, pw - m, y);
       y += 4;
     };
+
+    const injectIntentHeader = (doc, intentNote, layout) => {
+      if (!intentNote) return; // champ vide → aucune injection
+
+      const { margin, pageWidth, lineHeight } = layout;
+      const usableWidth = pageWidth - margin * 2;
+
+      // Titre de section
+      doc.setFontSize(9);
+      doc.setFont("helvetica", "bold");
+      doc.text("[INTENTION DE RECHERCHE]", margin, doc.y);
+      doc.y += lineHeight;
+
+      // Contenu de la note
+      doc.setFont("helvetica", "italic");
+      const lines = doc.splitTextToSize(intentNote, usableWidth);
+      lines.forEach(line => {
+        doc.text(line, margin, doc.y);
+        doc.y += lineHeight;
+      });
+
+      // Séparateur visuel
+      doc.setFont("helvetica", "normal");
+      doc.setDrawColor(200, 200, 200);
+      doc.line(margin, doc.y, pageWidth - margin, doc.y);
+      doc.y += lineHeight * 1.5;
+    };
+
+    // Ordre d'injection : on insère AVANT le rendu des meta-blocs (grounding)
+    if (intentNote) {
+      doc.y = y;
+      injectIntentHeader(doc, intentNote, { margin: m, pageWidth: pw, lineHeight: 5 });
+      y = doc.y;
+    }
 
     // --- Rendu des blocs ---
     for (const block of blocks) {

@@ -219,6 +219,12 @@ notebooklm-pdf-clipper/
 
 ## 📋 Changelog récent
 
+### v4.8.0 — Feature Annotation Intent Note
+
+- **Note d'intention (Intent Note)** : Ajout d'un champ texte optionnel dans la popup avant capture.
+- **Injection contextuelle** : La note est insérée avec un encart `[INTENTION DE RECHERCHE]` au début des documents PDF et Markdown générés (pour orienter l'IA contextuellement pendant l'ingestion par NotebookLM).
+- **Architecture sans régression** : La feature respecte strictement la transmission des messages MV3 vers les content scripts. Le champ demeure 100% optionnel et ne modifie pas le pipeline formaté en son absence.
+
 ### v4.7.0 — UX Drive simplifiée + documentation des limitations
 
 - **Fichiers Drive hébergés** : sur `drive.google.com/file/d/`, les boutons ☁️ Drive + 📸 Screenshot sont visibles (PDF, MD, URL masqués)
@@ -272,4 +278,4 @@ notebooklm-pdf-clipper/
 ---
 
 *Projet développé selon la méthodologie **Spec-Driven Development (SDD)**.*
-*Version 4.7.1 — Avril 2026*
+*Version 4.8.0 — Avril 2026*
