@@ -1,4 +1,4 @@
-# 📎 NotebookLM Web Clipper — Extension Firefox MV3
+# 📎 Magic Clipper for NotebookLM — Extension Firefox MV3
 
 Capturez le contenu de n'importe quelle page web et importez-le directement dans un carnet **Google NotebookLM** — en **PDF**, **Markdown**, **URL directe**, **Screenshot**, **Import Direct**, **Sélection de texte** ou **☁️ Google Drive natif**. Compatible **Firefox Desktop et Android**. Optimisé pour l'analyse par Gemini (grounding IA intégré).
 
@@ -148,7 +148,7 @@ Avant d'utiliser l'extension, **chaque compte Google** que vous souhaitez utilis
 
 ```bash
 npm install -g web-ext
-cd notebooklm-pdf-clipper
+cd notebooklm-magic-clipper
 web-ext run
 ```
 
@@ -168,7 +168,7 @@ npm install -g web-ext
 ## 📁 Structure du projet
 
 ```text
-notebooklm-pdf-clipper/
+notebooklm-magic-clipper/
 ├── manifest.json                   # Manifest V3 Firefox (Event Page)
 ├── lib/
 │   ├── jspdf.umd.min.js           # jsPDF 2.5.2 standalone
@@ -288,4 +288,4 @@ notebooklm-pdf-clipper/
 ---
 
 *Projet développé selon la méthodologie **Spec-Driven Development (SDD)**.*
-*Version 4.9.0 — Avril 2026*
+*Version 4.9.1 — Avril 2026*

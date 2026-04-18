@@ -1,8 +1,9 @@
 {
   "manifest_version": 3,
-  "name": "NotebookLM Web Clipper",
-  "version": "4.9.0",
-  "description": "Capturez le contenu structuré d'une page web et importez-le en PDF dans Google NotebookLM — optimisé pour l'analyse IA.",
+  "name": "Magic Clipper for NotebookLM",
+  "short_name": "Magic Clipper",
+  "version": "4.9.1",
+  "description": "Capturez, nettoyez et importez instantanément n'importe quelle page web dans Google NotebookLM avec une précision magique.",
   "browser_specific_settings": {
     "gecko": {
       "id": "notebooklm-web-clipper@mtfkarukera",
