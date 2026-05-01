@@ -128,5 +128,14 @@
   "menuContextImportSelection": {
     "message": "Nhập phần đã chọn vào NotebookLM",
     "description": "Context menu item to import selected text"
+  },
+  "popupLabelFormat": {
+    "message": "Định dạng"
+  },
+  "popupStatusReady": {
+    "message": "Sẵn sàng"
+  },
+  "btnClose": {
+    "message": "✖ Đóng"
   }
 }

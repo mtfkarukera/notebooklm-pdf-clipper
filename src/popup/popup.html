@@ -39,7 +39,7 @@
 
   <!-- FORMAT TOGGLE -->
   <section class="format-section">
-    <label>Format d'import</label>
+    <label data-i18n="popupLabelFormat">Format d'import</label>
     <div class="format-toggle" id="format-toggle">
       <button class="format-btn active" data-format="pdf" title="Images intégrées, mise en page visuelle" data-i18n="btnPdf" data-i18n-aria-label="btnPdfAriaLabel">📄 PDF</button>
       <button class="format-btn" data-format="md" title="Tables parfaites, ultra-léger, natif Gemini" data-i18n="btnMarkdown" data-i18n-aria-label="btnMarkdownAriaLabel">📝 Markdown</button>
@@ -87,11 +87,11 @@
 
   <!-- ZONE DE STATUT / INDICATEURS -->
   <footer class="app-footer">
-    <div id="status-message" class="status-message">Prêt</div>
+    <div id="status-message" class="status-message" data-i18n="popupStatusReady">Prêt</div>
   </footer>
 
   <!-- BOUTON FERMER (Autonome, pour mobile et desktop) -->
-  <button id="btn-close" class="btn close-btn">✖ Fermer</button>
+  <button id="btn-close" class="btn close-btn" data-i18n="btnClose">✖ Fermer</button>
 
   <script type="module" src="popup.js"></script>
 </body>

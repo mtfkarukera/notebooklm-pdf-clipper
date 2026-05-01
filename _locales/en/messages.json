@@ -128,5 +128,14 @@
   "menuContextImportSelection": {
     "message": "Import selection to NotebookLM",
     "description": "Context menu item to import selected text"
+  },
+  "popupLabelFormat": {
+    "message": "Import format"
+  },
+  "popupStatusReady": {
+    "message": "Ready"
+  },
+  "btnClose": {
+    "message": "✖ Close"
   }
 }

@@ -128,5 +128,14 @@
   "menuContextImportSelection": {
     "message": "Chajé mòso-la sa adan NotebookLM",
     "description": "Context menu item to import selected text"
+  },
+  "popupLabelFormat": {
+    "message": "Jan a enpòtasyon la"
+  },
+  "popupStatusReady": {
+    "message": "Paré"
+  },
+  "btnClose": {
+    "message": "✖ Fèmen"
   }
 }
