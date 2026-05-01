@@ -58,7 +58,7 @@ document.addEventListener('DOMContentLoaded', async () => {
 
   const localeSelector = document.getElementById('locale-selector');
   if (localeSelector) {
-    if (locale) localeSelector.value = locale;
+    localeSelector.value = (locale === 'gcf') ? 'gcf' : 'auto';
     localeSelector.addEventListener('change', async (e) => {
       await browser.storage.local.set({ locale: e.target.value });
       await setCustomLocale(e.target.value);

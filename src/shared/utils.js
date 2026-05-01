@@ -14,9 +14,7 @@ async function loadLocaleMessages(locale) {
 }
 
 export async function setCustomLocale(locale) {
-  if (locale === 'en' || locale === 'fr') {
-    _customMessages = null;
-  } else if (locale === 'gcf') {
+  if (locale === 'gcf') {
     _customMessages = await loadLocaleMessages('gcf');
   } else {
     _customMessages = null;
