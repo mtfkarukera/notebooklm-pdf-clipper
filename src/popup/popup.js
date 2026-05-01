@@ -523,7 +523,7 @@ function updateStatus(message, type, linkUrl, showDownload) {
     const link = document.createElement('a');
     link.href = linkUrl;
     link.target = '_blank';
-    link.textContent = ' Ouvrir le carnet →';
+    link.textContent = ' ' + t('linkOpenNotebook');
     link.style.cssText = 'color: #1a73e8; text-decoration: underline; cursor: pointer; margin-left: 4px;';
     uiStatusMessage.appendChild(link);
   }
@@ -532,15 +532,15 @@ function updateStatus(message, type, linkUrl, showDownload) {
     const ext = currentFormat === "md" ? ".md" : ".pdf";
     const dlLink = document.createElement('a');
     dlLink.href = '#';
-    dlLink.textContent = ` Télécharger le ${ext} ↓`;
+    dlLink.textContent = ' ' + t('linkDownloadFile').replace('{ext}', ext);
     dlLink.style.cssText = 'color: #34a853; text-decoration: underline; cursor: pointer; margin-left: 8px; font-size: 12px;';
     dlLink.addEventListener('click', (e) => {
       e.preventDefault();
       e.stopPropagation();
-      dlLink.textContent = ' Téléchargement...';
+      dlLink.textContent = ' ' + t('linkDownloading');
       browser.runtime.sendMessage({ action: "DOWNLOAD_CAPTURE" }).then(res => {
         if (res && res.ok) {
-          dlLink.textContent = ' ✅ Téléchargé';
+          dlLink.textContent = ' ' + t('linkDownloaded');
         } else {
           dlLink.textContent = ' ❌ ' + (res?.error || 'Erreur');
         }

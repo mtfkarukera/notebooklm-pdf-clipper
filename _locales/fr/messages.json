@@ -137,5 +137,9 @@
   },
   "btnClose": {
     "message": "✖ Fermer"
-  }
+  },
+  "linkOpenNotebook": { "message": "Ouvrir le carnet →" },
+  "linkDownloadFile": { "message": "Télécharger le {ext} ↓" },
+  "linkDownloading":  { "message": "Téléchargement..." },
+  "linkDownloaded":   { "message": "✅ Téléchargé" }
 }

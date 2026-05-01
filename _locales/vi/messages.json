@@ -137,5 +137,9 @@
   },
   "btnClose": {
     "message": "✖ Đóng"
-  }
+  },
+  "linkOpenNotebook": { "message": "Mở sổ tay →" },
+  "linkDownloadFile": { "message": "Tải {ext} ↓" },
+  "linkDownloading":  { "message": "Đang tải..." },
+  "linkDownloaded":   { "message": "✅ Đã tải" }
 }

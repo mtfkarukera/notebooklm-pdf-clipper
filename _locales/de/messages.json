@@ -137,5 +137,9 @@
   },
   "btnClose": {
     "message": "✖ Schließen"
-  }
+  },
+  "linkOpenNotebook": { "message": "Notizbuch öffnen →" },
+  "linkDownloadFile": { "message": "{ext} herunterladen ↓" },
+  "linkDownloading":  { "message": "Wird heruntergeladen..." },
+  "linkDownloaded":   { "message": "✅ Heruntergeladen" }
 }

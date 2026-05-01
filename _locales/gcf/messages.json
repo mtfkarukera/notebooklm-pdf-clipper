@@ -137,5 +137,9 @@
   },
   "btnClose": {
     "message": "✖ Fèmen"
-  }
+  },
+  "linkOpenNotebook": { "message": "Wouvè kayé-la →" },
+  "linkDownloadFile": { "message": "Tjouyi {ext} la ↓" },
+  "linkDownloading":  { "message": "I ka vin..." },
+  "linkDownloaded":   { "message": "✅ I rivé !" }
 }

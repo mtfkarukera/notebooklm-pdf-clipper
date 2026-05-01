@@ -137,5 +137,9 @@
   },
   "btnClose": {
     "message": "✖ Close"
-  }
+  },
+  "linkOpenNotebook": { "message": "Open notebook →" },
+  "linkDownloadFile": { "message": "Download {ext} ↓" },
+  "linkDownloading":  { "message": "Downloading..." },
+  "linkDownloaded":   { "message": "✅ Downloaded" }
 }
