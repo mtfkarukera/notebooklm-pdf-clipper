@@ -152,7 +152,7 @@
   "errNoSearchTerm":     { "message": "Enter a notebook name in the search field." },
   "creatingNotebook":    { "message": "Creating notebook \"{title}\"..." },
   "notebookCreated":     { "message": "Notebook \"{title}\" created ✅" },
-  "errCreateNotebook":   { "message": "Notebook creation failed. Please try again." },
+
   "errGeneric":          { "message": "Error: {msg}" },
   "errNoNotebook":       { "message": "Please select a notebook first." },
   "importingSelection":  { "message": "📋 Importing selection..." },
@@ -165,13 +165,8 @@
   "uploadSessionFailed":  { "message": "Upload failed: could not obtain an upload session." },
   "timeout":              { "message": "Request timed out. Check your connection and try again." },
   "unexpectedError":      { "message": "An unexpected error occurred. Check the console for details." },
-  "errFetchNotebooks":    { "message": "Could not retrieve your notebooks. Check your connection and reload." },
-  "errCreateNotebook2":   { "message": "Could not create the notebook. Check your connection and try again." },
   "errFileReader":        { "message": "File reading failed." },
   "errNoCapture":         { "message": "No capture available." },
-  "errImportSelection":   { "message": "Could not import the selection. Please try again." },
-  "errClipperPage":       { "message": "Cannot activate the clipper on this page (system or restricted page)." },
-  "errImportGeneric":     { "message": "An error occurred during import. Check the console for details." },
   "statusCreatingNb":     { "message": "Creating notebook..." },
   "statusUploadSelection":{ "message": "📋 Uploading selection..." },
   "statusImportedSelection":{ "message": "✅ Selection imported!" },
@@ -197,5 +192,25 @@
   "statusImportedMarkdown":{ "message": "✅ Markdown imported!" },
   "statusCheckQuota":     { "message": "Checking security quotas..." },
   "statusSendPdf":        { "message": "Sending PDF (Google Servers)..." },
-  "statusImportedPdf":    { "message": "✅ PDF imported!" }
+  "statusImportedPdf":    { "message": "✅ PDF imported!" },
+  "errGetNotebooks": {
+    "message": "Could not retrieve your notebooks. Check your connection and reload.",
+    "description": "Error when listing notebooks fails"
+  },
+  "errCreateNotebook": {
+    "message": "Could not create the notebook. Check your connection and try again.",
+    "description": "Error when notebook creation fails"
+  },
+  "errSelectionFailed": {
+    "message": "Could not import the selection. Please try again.",
+    "description": "Error when selection import fails"
+  },
+  "errWorkflowFailed": {
+    "message": "An error occurred during import. Check the console for details.",
+    "description": "Generic workflow error"
+  },
+  "errInjectionFailed": {
+    "message": "Cannot activate the clipper on this page (system or restricted page).",
+    "description": "Error when script injection fails on a restricted page"
+  }
 }

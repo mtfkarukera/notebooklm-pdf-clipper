@@ -138,64 +138,186 @@
   "btnClose": {
     "message": "✖ Cerrar"
   },
-  "linkOpenNotebook": { "message": "Abrir cuaderno →" },
-  "linkDownloadFile": { "message": "Descargar {ext} ↓" },
-  "linkDownloading":  { "message": "Descargando..." },
-  "linkDownloaded":   { "message": "✅ Descargado" },
-  "statusConnected":     { "message": "Conectado ({type})" },
-  "statusDisconnected":  { "message": "Desconectado" },
-  "errAuth":             { "message": "Error de autenticación." },
-  "loadingNotebooks":    { "message": "Cargando cuadernos..." },
-  "errLoadNotebooks":    { "message": "Error al cargar los cuadernos." },
-  "noNotebookFound":     { "message": "No se encontró ningún cuaderno." },
-  "notebookNotFound":    { "message": "Cuaderno no encontrado." },
-  "errNoSearchTerm":     { "message": "Ingresa un nombre de cuaderno en el campo de búsqueda." },
-  "creatingNotebook":    { "message": "Creando cuaderno \"{title}\"..." },
-  "notebookCreated":     { "message": "Cuaderno \"{title}\" creado ✅" },
-  "errCreateNotebook":   { "message": "Error al crear el cuaderno. Inténtalo de nuevo." },
-  "errGeneric":          { "message": "Error: {msg}" },
-  "errNoNotebook":       { "message": "Por favor selecciona un cuaderno primero." },
-  "importingSelection":  { "message": "📋 Importando selección..." },
-  "importingFormat":     { "message": "Importando como {label}..." },
-  "warnLocalFile":       { "message": "⚠️ Archivo local — la importación directa no está disponible." },
-  "errDownload":         { "message": "❌ Error" },
-  "errGenericOccurred":  { "message": "Se produjo un error." },
-  "apiChanged":           { "message": "La API de NotebookLM ha sido actualizada por Google. Se requiere una actualización de la extensión." },
-  "sessionExpired":       { "message": "Sesión expirada. Vuelve a iniciar sesión en notebooklm.google.com." },
-  "uploadSessionFailed":  { "message": "Subida fallida: no se pudo obtener una sesión de subida." },
-  "timeout":              { "message": "Tiempo de espera agotado. Verifica tu conexión e inténtalo de nuevo." },
-  "unexpectedError":      { "message": "Ocurrió un error inesperado. Consulta la consola para más detalles." },
-  "errFetchNotebooks":    { "message": "No se pudieron obtener tus cuadernos. Verifica tu conexión y recarga." },
-  "errCreateNotebook2":   { "message": "No se pudo crear el cuaderno. Verifica tu conexión e inténtalo de nuevo." },
-  "errFileReader":        { "message": "Error al leer el archivo." },
-  "errNoCapture":         { "message": "No hay captura disponible." },
-  "errImportSelection":   { "message": "No se pudo importar la selección. Inténtalo de nuevo." },
-  "errClipperPage":       { "message": "No se puede activar el clipper en esta página (página del sistema o restringida)." },
-  "errImportGeneric":     { "message": "Ocurrió un error durante la importación. Consulta la consola para más detalles." },
-  "statusCreatingNb":     { "message": "Creando cuaderno..." },
-  "statusUploadSelection":{ "message": "📋 Subiendo selección..." },
-  "statusImportedSelection":{ "message": "✅ ¡Selección importada!" },
-  "notifSelectionTitle":  { "message": "📎 Recortar selección en NotebookLM" },
-  "notifSelectionCaptured":{ "message": "Selección capturada ✓" },
-  "notifSelectionMsg":    { "message": "Haz clic en el botón NotebookLM Web Clipper para elegir un cuaderno." },
-  "notifSuccessMsg":      { "message": "¡\"{title}\" añadido en {format} con éxito!" },
-  "statusFetchSession":   { "message": "Obteniendo sesión personal..." },
-  "statusScreenshot":     { "message": "📸 Capturando viewport..." },
-  "statusUploadScreenshot":{ "message": "📸 Subiendo captura de pantalla..." },
-  "statusImportedScreenshot":{ "message": "✅ ¡Captura de pantalla importada!" },
-  "statusDownloadFile":   { "message": "⚡ Descargando archivo..." },
-  "statusUploadFile":     { "message": "⚡ Subiendo {ext}..." },
-  "statusImportedFile":   { "message": "✅ ¡Archivo importado directamente!" },
-  "statusDrive":          { "message": "☁️ Conectando con Google Drive..." },
-  "statusImportedDrive":  { "message": "✅ ¡Documento de Google Drive sincronizado!" },
-  "statusYoutube":        { "message": "YouTube detectado → importación nativa..." },
-  "statusSendUrl":        { "message": "Enviando URL a NotebookLM..." },
-  "statusImportedYoutube":{ "message": "✅ ¡Vídeo de YouTube importado!" },
-  "statusImportedUrl":    { "message": "✅ ¡URL importada!" },
-  "statusDomCapture":     { "message": "Solicitando captura DOM..." },
-  "statusSendMarkdown":   { "message": "Enviando Markdown (fuente de texto)..." },
-  "statusImportedMarkdown":{ "message": "✅ ¡Markdown importado!" },
-  "statusCheckQuota":     { "message": "Verificando cuotas de seguridad..." },
-  "statusSendPdf":        { "message": "Enviando PDF (Servidores Google)..." },
-  "statusImportedPdf":    { "message": "✅ ¡PDF importado!" }
+  "linkOpenNotebook": {
+    "message": "Abrir cuaderno →"
+  },
+  "linkDownloadFile": {
+    "message": "Descargar {ext} ↓"
+  },
+  "linkDownloading": {
+    "message": "Descargando..."
+  },
+  "linkDownloaded": {
+    "message": "✅ Descargado"
+  },
+  "statusConnected": {
+    "message": "Conectado ({type})"
+  },
+  "statusDisconnected": {
+    "message": "Desconectado"
+  },
+  "errAuth": {
+    "message": "Error de autenticación."
+  },
+  "loadingNotebooks": {
+    "message": "Cargando cuadernos..."
+  },
+  "errLoadNotebooks": {
+    "message": "Error al cargar los cuadernos."
+  },
+  "noNotebookFound": {
+    "message": "No se encontró ningún cuaderno."
+  },
+  "notebookNotFound": {
+    "message": "Cuaderno no encontrado."
+  },
+  "errNoSearchTerm": {
+    "message": "Ingresa un nombre de cuaderno en el campo de búsqueda."
+  },
+  "creatingNotebook": {
+    "message": "Creando cuaderno \"{title}\"..."
+  },
+  "notebookCreated": {
+    "message": "Cuaderno \"{title}\" creado ✅"
+  },
+  "errCreateNotebook": {
+    "message": "No se pudo crear el cuaderno. Comprueba tu conexión e inténtalo de nuevo.",
+    "description": "Error al crear un cuaderno"
+  },
+  "errGeneric": {
+    "message": "Error: {msg}"
+  },
+  "errNoNotebook": {
+    "message": "Por favor selecciona un cuaderno primero."
+  },
+  "importingSelection": {
+    "message": "📋 Importando selección..."
+  },
+  "importingFormat": {
+    "message": "Importando como {label}..."
+  },
+  "warnLocalFile": {
+    "message": "⚠️ Archivo local — la importación directa no está disponible."
+  },
+  "errDownload": {
+    "message": "❌ Error"
+  },
+  "errGenericOccurred": {
+    "message": "Se produjo un error."
+  },
+  "apiChanged": {
+    "message": "La API de NotebookLM ha sido actualizada por Google. Se requiere una actualización de la extensión."
+  },
+  "sessionExpired": {
+    "message": "Sesión expirada. Vuelve a iniciar sesión en notebooklm.google.com."
+  },
+  "uploadSessionFailed": {
+    "message": "Subida fallida: no se pudo obtener una sesión de subida."
+  },
+  "timeout": {
+    "message": "Tiempo de espera agotado. Verifica tu conexión e inténtalo de nuevo."
+  },
+  "unexpectedError": {
+    "message": "Ocurrió un error inesperado. Consulta la consola para más detalles."
+  },
+  "errFileReader": {
+    "message": "Error al leer el archivo."
+  },
+  "errNoCapture": {
+    "message": "No hay captura disponible."
+  },
+  "statusCreatingNb": {
+    "message": "Creando cuaderno..."
+  },
+  "statusUploadSelection": {
+    "message": "📋 Subiendo selección..."
+  },
+  "statusImportedSelection": {
+    "message": "✅ ¡Selección importada!"
+  },
+  "notifSelectionTitle": {
+    "message": "📎 Recortar selección en NotebookLM"
+  },
+  "notifSelectionCaptured": {
+    "message": "Selección capturada ✓"
+  },
+  "notifSelectionMsg": {
+    "message": "Haz clic en el botón NotebookLM Web Clipper para elegir un cuaderno."
+  },
+  "notifSuccessMsg": {
+    "message": "¡\"{title}\" añadido en {format} con éxito!"
+  },
+  "statusFetchSession": {
+    "message": "Obteniendo sesión personal..."
+  },
+  "statusScreenshot": {
+    "message": "📸 Capturando viewport..."
+  },
+  "statusUploadScreenshot": {
+    "message": "📸 Subiendo captura de pantalla..."
+  },
+  "statusImportedScreenshot": {
+    "message": "✅ ¡Captura de pantalla importada!"
+  },
+  "statusDownloadFile": {
+    "message": "⚡ Descargando archivo..."
+  },
+  "statusUploadFile": {
+    "message": "⚡ Subiendo {ext}..."
+  },
+  "statusImportedFile": {
+    "message": "✅ ¡Archivo importado directamente!"
+  },
+  "statusDrive": {
+    "message": "☁️ Conectando con Google Drive..."
+  },
+  "statusImportedDrive": {
+    "message": "✅ ¡Documento de Google Drive sincronizado!"
+  },
+  "statusYoutube": {
+    "message": "YouTube detectado → importación nativa..."
+  },
+  "statusSendUrl": {
+    "message": "Enviando URL a NotebookLM..."
+  },
+  "statusImportedYoutube": {
+    "message": "✅ ¡Vídeo de YouTube importado!"
+  },
+  "statusImportedUrl": {
+    "message": "✅ ¡URL importada!"
+  },
+  "statusDomCapture": {
+    "message": "Solicitando captura DOM..."
+  },
+  "statusSendMarkdown": {
+    "message": "Enviando Markdown (fuente de texto)..."
+  },
+  "statusImportedMarkdown": {
+    "message": "✅ ¡Markdown importado!"
+  },
+  "statusCheckQuota": {
+    "message": "Verificando cuotas de seguridad..."
+  },
+  "statusSendPdf": {
+    "message": "Enviando PDF (Servidores Google)..."
+  },
+  "statusImportedPdf": {
+    "message": "✅ ¡PDF importado!"
+  },
+  "errGetNotebooks": {
+    "message": "No se pudieron recuperar los cuadernos. Comprueba tu conexión y recarga.",
+    "description": "Error al recuperar la lista de cuadernos"
+  },
+  "errSelectionFailed": {
+    "message": "No se pudo importar la selección. Por favor, inténtalo de nuevo.",
+    "description": "Error al importar una selección"
+  },
+  "errWorkflowFailed": {
+    "message": "Se produjo un error durante la importación. Consulta la consola.",
+    "description": "Error genérico del flujo de importación"
+  },
+  "errInjectionFailed": {
+    "message": "No se puede activar el clipper en esta página (página del sistema o restringida).",
+    "description": "Error de inyección de script en una página restringida"
+  }
 }

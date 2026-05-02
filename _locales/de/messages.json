@@ -138,64 +138,186 @@
   "btnClose": {
     "message": "✖ Schließen"
   },
-  "linkOpenNotebook": { "message": "Notizbuch öffnen →" },
-  "linkDownloadFile": { "message": "{ext} herunterladen ↓" },
-  "linkDownloading":  { "message": "Wird heruntergeladen..." },
-  "linkDownloaded":   { "message": "✅ Heruntergeladen" },
-  "statusConnected":     { "message": "Verbunden ({type})" },
-  "statusDisconnected":  { "message": "Getrennt" },
-  "errAuth":             { "message": "Authentifizierungsfehler." },
-  "loadingNotebooks":    { "message": "Notizbücher werden geladen..." },
-  "errLoadNotebooks":    { "message": "Fehler beim Laden der Notizbücher." },
-  "noNotebookFound":     { "message": "Kein Notizbuch gefunden." },
-  "notebookNotFound":    { "message": "Notizbuch nicht gefunden." },
-  "errNoSearchTerm":     { "message": "Gib einen Notizbuchnamen in das Suchfeld ein." },
-  "creatingNotebook":    { "message": "Notizbuch \"{title}\" wird erstellt..." },
-  "notebookCreated":     { "message": "Notizbuch \"{title}\" erstellt ✅" },
-  "errCreateNotebook":   { "message": "Notizbuch konnte nicht erstellt werden. Erneut versuchen." },
-  "errGeneric":          { "message": "Fehler: {msg}" },
-  "errNoNotebook":       { "message": "Bitte zuerst ein Notizbuch auswählen." },
-  "importingSelection":  { "message": "📋 Auswahl wird importiert..." },
-  "importingFormat":     { "message": "Import als {label}..." },
-  "warnLocalFile":       { "message": "⚠️ Lokale Datei — Direktimport nicht verfügbar." },
-  "errDownload":         { "message": "❌ Fehler" },
-  "errGenericOccurred":  { "message": "Ein Fehler ist aufgetreten." },
-  "apiChanged":           { "message": "Die NotebookLM-API wurde von Google aktualisiert. Ein Extension-Update ist erforderlich." },
-  "sessionExpired":       { "message": "Sitzung abgelaufen. Bitte erneut auf notebooklm.google.com anmelden." },
-  "uploadSessionFailed":  { "message": "Upload fehlgeschlagen: Upload-Sitzung konnte nicht gestartet werden." },
-  "timeout":              { "message": "Zeitüberschreitung. Verbindung prüfen und erneut versuchen." },
-  "unexpectedError":      { "message": "Ein unerwarteter Fehler ist aufgetreten. Konsole für Details prüfen." },
-  "errFetchNotebooks":    { "message": "Notizbücher konnten nicht abgerufen werden. Verbindung prüfen und neu laden." },
-  "errCreateNotebook2":   { "message": "Notizbuch konnte nicht erstellt werden. Verbindung prüfen und erneut versuchen." },
-  "errFileReader":        { "message": "Datei konnte nicht gelesen werden." },
-  "errNoCapture":         { "message": "Keine Aufnahme verfügbar." },
-  "errImportSelection":   { "message": "Auswahl konnte nicht importiert werden. Erneut versuchen." },
-  "errClipperPage":       { "message": "Clipper kann auf dieser Seite nicht aktiviert werden (System- oder eingeschränkte Seite)." },
-  "errImportGeneric":     { "message": "Beim Import ist ein Fehler aufgetreten. Konsole für Details prüfen." },
-  "statusCreatingNb":     { "message": "Notizbuch wird erstellt..." },
-  "statusUploadSelection":{ "message": "📋 Auswahl wird hochgeladen..." },
-  "statusImportedSelection":{ "message": "✅ Auswahl importiert!" },
-  "notifSelectionTitle":  { "message": "📎 Auswahl in NotebookLM speichern" },
-  "notifSelectionCaptured":{ "message": "Auswahl erfasst ✓" },
-  "notifSelectionMsg":    { "message": "Klicke auf den NotebookLM Web Clipper-Button, um ein Notizbuch auszuwählen." },
-  "notifSuccessMsg":      { "message": "\"{title}\" erfolgreich als {format} hinzugefügt!" },
-  "statusFetchSession":   { "message": "Persönliche Sitzung wird abgerufen..." },
-  "statusScreenshot":     { "message": "📸 Viewport wird erfasst..." },
-  "statusUploadScreenshot":{ "message": "📸 Screenshot wird hochgeladen..." },
-  "statusImportedScreenshot":{ "message": "✅ Screenshot importiert!" },
-  "statusDownloadFile":   { "message": "⚡ Datei wird heruntergeladen..." },
-  "statusUploadFile":     { "message": "⚡ {ext} wird hochgeladen..." },
-  "statusImportedFile":   { "message": "✅ Datei direkt importiert!" },
-  "statusDrive":          { "message": "☁️ Verbindung mit Google Drive..." },
-  "statusImportedDrive":  { "message": "✅ Google Drive-Dokument synchronisiert!" },
-  "statusYoutube":        { "message": "YouTube erkannt → nativer Import..." },
-  "statusSendUrl":        { "message": "URL wird an NotebookLM gesendet..." },
-  "statusImportedYoutube":{ "message": "✅ YouTube-Video importiert!" },
-  "statusImportedUrl":    { "message": "✅ URL importiert!" },
-  "statusDomCapture":     { "message": "DOM-Aufnahme wird angefordert..." },
-  "statusSendMarkdown":   { "message": "Markdown wird gesendet (Textquelle)..." },
-  "statusImportedMarkdown":{ "message": "✅ Markdown importiert!" },
-  "statusCheckQuota":     { "message": "Sicherheitskontingente werden geprüft..." },
-  "statusSendPdf":        { "message": "PDF wird gesendet (Google-Server)..." },
-  "statusImportedPdf":    { "message": "✅ PDF importiert!" }
+  "linkOpenNotebook": {
+    "message": "Notizbuch öffnen →"
+  },
+  "linkDownloadFile": {
+    "message": "{ext} herunterladen ↓"
+  },
+  "linkDownloading": {
+    "message": "Wird heruntergeladen..."
+  },
+  "linkDownloaded": {
+    "message": "✅ Heruntergeladen"
+  },
+  "statusConnected": {
+    "message": "Verbunden ({type})"
+  },
+  "statusDisconnected": {
+    "message": "Getrennt"
+  },
+  "errAuth": {
+    "message": "Authentifizierungsfehler."
+  },
+  "loadingNotebooks": {
+    "message": "Notizbücher werden geladen..."
+  },
+  "errLoadNotebooks": {
+    "message": "Fehler beim Laden der Notizbücher."
+  },
+  "noNotebookFound": {
+    "message": "Kein Notizbuch gefunden."
+  },
+  "notebookNotFound": {
+    "message": "Notizbuch nicht gefunden."
+  },
+  "errNoSearchTerm": {
+    "message": "Gib einen Notizbuchnamen in das Suchfeld ein."
+  },
+  "creatingNotebook": {
+    "message": "Notizbuch \"{title}\" wird erstellt..."
+  },
+  "notebookCreated": {
+    "message": "Notizbuch \"{title}\" erstellt ✅"
+  },
+  "errCreateNotebook": {
+    "message": "Notizbuch konnte nicht erstellt werden. Überprüfen Sie Ihre Verbindung.",
+    "description": "Fehler beim Erstellen eines Notizbuchs"
+  },
+  "errGeneric": {
+    "message": "Fehler: {msg}"
+  },
+  "errNoNotebook": {
+    "message": "Bitte zuerst ein Notizbuch auswählen."
+  },
+  "importingSelection": {
+    "message": "📋 Auswahl wird importiert..."
+  },
+  "importingFormat": {
+    "message": "Import als {label}..."
+  },
+  "warnLocalFile": {
+    "message": "⚠️ Lokale Datei — Direktimport nicht verfügbar."
+  },
+  "errDownload": {
+    "message": "❌ Fehler"
+  },
+  "errGenericOccurred": {
+    "message": "Ein Fehler ist aufgetreten."
+  },
+  "apiChanged": {
+    "message": "Die NotebookLM-API wurde von Google aktualisiert. Ein Extension-Update ist erforderlich."
+  },
+  "sessionExpired": {
+    "message": "Sitzung abgelaufen. Bitte erneut auf notebooklm.google.com anmelden."
+  },
+  "uploadSessionFailed": {
+    "message": "Upload fehlgeschlagen: Upload-Sitzung konnte nicht gestartet werden."
+  },
+  "timeout": {
+    "message": "Zeitüberschreitung. Verbindung prüfen und erneut versuchen."
+  },
+  "unexpectedError": {
+    "message": "Ein unerwarteter Fehler ist aufgetreten. Konsole für Details prüfen."
+  },
+  "errFileReader": {
+    "message": "Datei konnte nicht gelesen werden."
+  },
+  "errNoCapture": {
+    "message": "Keine Aufnahme verfügbar."
+  },
+  "statusCreatingNb": {
+    "message": "Notizbuch wird erstellt..."
+  },
+  "statusUploadSelection": {
+    "message": "📋 Auswahl wird hochgeladen..."
+  },
+  "statusImportedSelection": {
+    "message": "✅ Auswahl importiert!"
+  },
+  "notifSelectionTitle": {
+    "message": "📎 Auswahl in NotebookLM speichern"
+  },
+  "notifSelectionCaptured": {
+    "message": "Auswahl erfasst ✓"
+  },
+  "notifSelectionMsg": {
+    "message": "Klicke auf den NotebookLM Web Clipper-Button, um ein Notizbuch auszuwählen."
+  },
+  "notifSuccessMsg": {
+    "message": "\"{title}\" erfolgreich als {format} hinzugefügt!"
+  },
+  "statusFetchSession": {
+    "message": "Persönliche Sitzung wird abgerufen..."
+  },
+  "statusScreenshot": {
+    "message": "📸 Viewport wird erfasst..."
+  },
+  "statusUploadScreenshot": {
+    "message": "📸 Screenshot wird hochgeladen..."
+  },
+  "statusImportedScreenshot": {
+    "message": "✅ Screenshot importiert!"
+  },
+  "statusDownloadFile": {
+    "message": "⚡ Datei wird heruntergeladen..."
+  },
+  "statusUploadFile": {
+    "message": "⚡ {ext} wird hochgeladen..."
+  },
+  "statusImportedFile": {
+    "message": "✅ Datei direkt importiert!"
+  },
+  "statusDrive": {
+    "message": "☁️ Verbindung mit Google Drive..."
+  },
+  "statusImportedDrive": {
+    "message": "✅ Google Drive-Dokument synchronisiert!"
+  },
+  "statusYoutube": {
+    "message": "YouTube erkannt → nativer Import..."
+  },
+  "statusSendUrl": {
+    "message": "URL wird an NotebookLM gesendet..."
+  },
+  "statusImportedYoutube": {
+    "message": "✅ YouTube-Video importiert!"
+  },
+  "statusImportedUrl": {
+    "message": "✅ URL importiert!"
+  },
+  "statusDomCapture": {
+    "message": "DOM-Aufnahme wird angefordert..."
+  },
+  "statusSendMarkdown": {
+    "message": "Markdown wird gesendet (Textquelle)..."
+  },
+  "statusImportedMarkdown": {
+    "message": "✅ Markdown importiert!"
+  },
+  "statusCheckQuota": {
+    "message": "Sicherheitskontingente werden geprüft..."
+  },
+  "statusSendPdf": {
+    "message": "PDF wird gesendet (Google-Server)..."
+  },
+  "statusImportedPdf": {
+    "message": "✅ PDF importiert!"
+  },
+  "errGetNotebooks": {
+    "message": "Notizbücher konnten nicht abgerufen werden. Überprüfen Sie Ihre Verbindung.",
+    "description": "Fehler beim Abrufen der Notizbuchliste"
+  },
+  "errSelectionFailed": {
+    "message": "Auswahl konnte nicht importiert werden. Bitte erneut versuchen.",
+    "description": "Fehler beim Importieren einer Auswahl"
+  },
+  "errWorkflowFailed": {
+    "message": "Beim Import ist ein Fehler aufgetreten. Überprüfen Sie die Konsole.",
+    "description": "Allgemeiner Workflow-Fehler"
+  },
+  "errInjectionFailed": {
+    "message": "Der Clipper kann auf dieser Seite nicht aktiviert werden (System- oder eingeschränkte Seite).",
+    "description": "Fehler bei der Skriptinjektion auf einer gesperrten Seite"
+  }
 }

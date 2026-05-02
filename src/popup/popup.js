@@ -189,7 +189,10 @@ function loadNotebooks() {
             allNotebooksCache = res.notebooks;
             renderNotebooks(allNotebooksCache);
          } else if (res && res.status === "error") {
-            setPlaceholder(uiNotebookList, res.userMessage || t('errLoadNotebooks'), 'color:#d32f2f; font-size:12px; margin: 10px;');
+            const msg = res.i18nKey
+                ? (browser.i18n.getMessage(res.i18nKey) || "Erreur lors du chargement des carnets.")
+                : "Erreur lors du chargement des carnets.";
+            setPlaceholder(uiNotebookList, msg, "color:#d32f2f;font-size:12px;margin:10px");
          } else {
             setPlaceholder(uiNotebookList, t('noNotebookFound'));
          }
@@ -269,7 +272,10 @@ async function createNewNotebook() {
       const notebookUrl = `https://notebooklm.google.com/notebook/${response.notebookId}`;
       updateStatus(t('notebookCreated').replace('{title}', title), "success", notebookUrl);
     } else {
-      updateStatus(response?.userMessage || t('errCreateNotebook'), "error");
+      const msg = response?.i18nKey
+          ? (browser.i18n.getMessage(response.i18nKey) || "Création du carnet échouée. Réessayez.")
+          : "Création du carnet échouée. Réessayez.";
+      updateStatus(msg, "error");
     }
   } catch (err) {
     updateStatus(t('errGeneric').replace('{msg}', err.message), "error");
@@ -566,11 +572,18 @@ document.getElementById('btn-close').addEventListener('click', () => {
   window.close();
 });
 
-browser.runtime.onMessage.addListener((message) => {
-  if(message.type === "STATUS_UPDATE") {
-    const displayText = message.status === "error"
-      ? (message.userMessage || message.text || t('errGenericOccurred'))
-      : (message.text || message.userMessage || "");
+browser.runtime.onMessage.addListener(message => {
+  if (message.type === "STATUS_UPDATE") {
+    let displayText;
+    if (message.i18nKey) {
+        displayText = browser.i18n.getMessage(message.i18nKey)
+            || message.text
+            || "Une erreur s'est produite.";
+    } else {
+        displayText = message.status === "error"
+            ? (message.text || "Une erreur s'est produite.")
+            : message.text;
+    }
     updateStatus(displayText, message.status, message.linkUrl, message.showDownload);
     if(message.status === "error" || message.status === "success") {
       resetUI();

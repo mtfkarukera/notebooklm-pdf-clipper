@@ -138,64 +138,186 @@
   "btnClose": {
     "message": "✖ Fèmen"
   },
-  "linkOpenNotebook": { "message": "Wouvè kayé-la →" },
-  "linkDownloadFile": { "message": "Tjouyi {ext} la ↓" },
-  "linkDownloading":  { "message": "I ka vin..." },
-  "linkDownloaded":   { "message": "✅ I rivé !" },
-  "statusConnected":     { "message": "Konekte ({type})" },
-  "statusDisconnected":  { "message": "Dékonekte" },
-  "errAuth":             { "message": "Érè a otantifikasyon." },
-  "loadingNotebooks":    { "message": "I ka chajé sé kayé-la…" },
-  "errLoadNotebooks":    { "message": "Ni on érè lè pou nou chajé sé kayé-la." },
-  "noNotebookFound":     { "message": "Nou pa ka touvé pon kayé." },
-  "notebookNotFound":    { "message": "Nou pa ka touvé kayé-la." },
-  "errNoSearchTerm":     { "message": "Maké non a on kayé an kaz a wouchach-la." },
-  "creatingNotebook":    { "message": "I ka fè kayé-la sa : \"{title}\"..." },
-  "notebookCreated":     { "message": "Kayé-la \"{title}\" fèt ! ✅" },
-  "errCreateNotebook":   { "message": "Nou pa rivé fè kayé-la. Viré fè'y !" },
-  "errGeneric":          { "message": "Erè : {msg}" },
-  "errNoNotebook":       { "message": "Chwazi on kayé pou koumansé." },
-  "importingSelection":  { "message": "📋 I ka chajé tèks a'w la…" },
-  "importingFormat":     { "message": "I ka chajé an {label}..." },
-  "warnLocalFile":       { "message": "⚠️ Pyès lokal — Ou pé pa chajé'y dirèk." },
-  "errDownload":         { "message": "❌ Érè" },
-  "errGenericOccurred":  { "message": "On érè rivé." },
-  "apiChanged":           { "message": "Google chanjé API NotebookLM-la. Fò nou aktyalizé èkstansyon-la." },
-  "sessionExpired":       { "message": "Sésyon-la fèmé. Viré lyanné anlè notebooklm.google.com." },
-  "uploadSessionFailed":  { "message": "Pyès-la pa pati : nou pa ka rivé ni ou sésyon pou voyé pyès-la." },
-  "timeout":              { "message": "Twòp tan. Gadé si'w byen lyanné épi woukoumansé apwé." },
-  "unexpectedError":      { "message": "Pooo ! Mi bab mi ! Gadé konsol-la pou konpwann ka i ka fèt." },
-  "errFetchNotebooks":    { "message": "Nou pa ka vwè sé kayé-la. Gadé si'w byen lyanné épi wouchajé paj-la." },
-  "errCreateNotebook2":   { "message": "Nou pa ka rivé fè kayé-la. Gadé si'w byen lyanné épi woukoumansé apwé." },
-  "errFileReader":        { "message": "Nou pa ka rivé li pyès-la." },
-  "errNoCapture":         { "message": "Pa ni ayen nou pé chajé, la." },
-  "errImportSelection":   { "message": "Nou pé pa chajé tèks-la sa. Woukoumansé pou vwè." },
-  "errClipperPage":       { "message": "Klipè-la pé pa maché anlè paj-la sa (paj a dwa limité)." },
-  "errImportGeneric":     { "message": "On érè fèt lè nou té ka chajé pyès la. Gadé konsol-la pou konpwann ka i ka fèt." },
-  "statusCreatingNb":     { "message": "Nou ka fè kayé-la..." },
-  "statusUploadSelection":{ "message": "📋 Nou ka chajé tèks-la..." },
-  "statusImportedSelection":{ "message": "✅ Pyès-la chajé !" },
-  "notifSelectionTitle":  { "message": "📎 Voyé tèks la asi NotebookLM" },
-  "notifSelectionCaptured":{ "message": "Tèks-la chajé ! ✓" },
-  "notifSelectionMsg":    { "message": "Pijé bouton NotebookLM Web Clipper-la pou chwazi on kayé." },
-  "notifSuccessMsg":      { "message": "\"{title}\" byen chajé an {format} !" },
-  "statusFetchSession":   { "message": "Nou ka woupwan sésyon péwsonèl-la..." },
-  "statusScreenshot":     { "message": "📸 Foto a sa'w ka vwè..." },
-  "statusUploadScreenshot":{ "message": "📸 Foto-la ka chajé..." },
-  "statusImportedScreenshot":{ "message": "✅ Foto-la fin chajé !" },
-  "statusDownloadFile":   { "message": "⚡ Nou ka chajé pyès-la..." },
-  "statusUploadFile":     { "message": "⚡ Nou ka chajé {ext}..." },
-  "statusImportedFile":   { "message": "✅ Pyès-la fin chajé !" },
-  "statusDrive":          { "message": "☁️ Lyannaj' évè Google Drive-la..." },
-  "statusImportedDrive":  { "message": "✅ Pyès Google Drive-la senkwonizé !" },
-  "statusYoutube":        { "message": "YouTube détékté → chajman natif..." },
-  "statusSendUrl":        { "message": "Nou ka voyé URL-la ba NotebookLM..." },
-  "statusImportedYoutube":{ "message": "✅ Vidéo YouTube-la fin chajé !" },
-  "statusImportedUrl":    { "message": "✅ URL-la fin chajé !" },
-  "statusDomCapture":     { "message": "Nou ka mandé pou kenbé DOM-la..." },
-  "statusSendMarkdown":   { "message": "Nou ka voyé Markdown-la (sous tèks)..." },
-  "statusImportedMarkdown":{ "message": "✅ Markdown-la fin chajé !" },
-  "statusCheckQuota":     { "message": "Nou ka gadé sé kota a sékirité-la..." },
-  "statusSendPdf":        { "message": "Nou ka voyé PDF-la (Séwvè a Google)..." },
-  "statusImportedPdf":    { "message": "✅ PDF-la fin chajé !" }
+  "linkOpenNotebook": {
+    "message": "Wouvè kayé-la →"
+  },
+  "linkDownloadFile": {
+    "message": "Tjouyi {ext} la ↓"
+  },
+  "linkDownloading": {
+    "message": "I ka vin..."
+  },
+  "linkDownloaded": {
+    "message": "✅ I rivé !"
+  },
+  "statusConnected": {
+    "message": "Konekte ({type})"
+  },
+  "statusDisconnected": {
+    "message": "Dékonekte"
+  },
+  "errAuth": {
+    "message": "Érè a otantifikasyon."
+  },
+  "loadingNotebooks": {
+    "message": "I ka chajé sé kayé-la…"
+  },
+  "errLoadNotebooks": {
+    "message": "Ni on érè lè pou nou chajé sé kayé-la."
+  },
+  "noNotebookFound": {
+    "message": "Nou pa ka touvé pon kayé."
+  },
+  "notebookNotFound": {
+    "message": "Nou pa ka touvé kayé-la."
+  },
+  "errNoSearchTerm": {
+    "message": "Maké non a on kayé an kaz a wouchach-la."
+  },
+  "creatingNotebook": {
+    "message": "I ka fè kayé-la sa : \"{title}\"..."
+  },
+  "notebookCreated": {
+    "message": "Kayé-la \"{title}\" fèt ! ✅"
+  },
+  "errCreateNotebook": {
+    "message": "Nou pa rivé kréyé kayé-la. Véyé konèksyon a-w é réésayé.",
+    "description": "Erè lè nou ka kréyé on kayé"
+  },
+  "errGeneric": {
+    "message": "Erè : {msg}"
+  },
+  "errNoNotebook": {
+    "message": "Chwazi on kayé pou koumansé."
+  },
+  "importingSelection": {
+    "message": "📋 I ka chajé tèks a'w la…"
+  },
+  "importingFormat": {
+    "message": "I ka chajé an {label}..."
+  },
+  "warnLocalFile": {
+    "message": "⚠️ Pyès lokal — Ou pé pa chajé'y dirèk."
+  },
+  "errDownload": {
+    "message": "❌ Érè"
+  },
+  "errGenericOccurred": {
+    "message": "On érè rivé."
+  },
+  "apiChanged": {
+    "message": "Google chanjé API NotebookLM-la. Fò nou aktyalizé èkstansyon-la."
+  },
+  "sessionExpired": {
+    "message": "Sésyon-la fèmé. Viré lyanné anlè notebooklm.google.com."
+  },
+  "uploadSessionFailed": {
+    "message": "Pyès-la pa pati : nou pa ka rivé ni ou sésyon pou voyé pyès-la."
+  },
+  "timeout": {
+    "message": "Twòp tan. Gadé si'w byen lyanné épi woukoumansé apwé."
+  },
+  "unexpectedError": {
+    "message": "Pooo ! Mi bab mi ! Gadé konsol-la pou konpwann ka i ka fèt."
+  },
+  "errFileReader": {
+    "message": "Nou pa ka rivé li pyès-la."
+  },
+  "errNoCapture": {
+    "message": "Pa ni ayen nou pé chajé, la."
+  },
+  "statusCreatingNb": {
+    "message": "Nou ka fè kayé-la..."
+  },
+  "statusUploadSelection": {
+    "message": "📋 Nou ka chajé tèks-la..."
+  },
+  "statusImportedSelection": {
+    "message": "✅ Pyès-la chajé !"
+  },
+  "notifSelectionTitle": {
+    "message": "📎 Voyé tèks la asi NotebookLM"
+  },
+  "notifSelectionCaptured": {
+    "message": "Tèks-la chajé ! ✓"
+  },
+  "notifSelectionMsg": {
+    "message": "Pijé bouton NotebookLM Web Clipper-la pou chwazi on kayé."
+  },
+  "notifSuccessMsg": {
+    "message": "\"{title}\" byen chajé an {format} !"
+  },
+  "statusFetchSession": {
+    "message": "Nou ka woupwan sésyon péwsonèl-la..."
+  },
+  "statusScreenshot": {
+    "message": "📸 Foto a sa'w ka vwè..."
+  },
+  "statusUploadScreenshot": {
+    "message": "📸 Foto-la ka chajé..."
+  },
+  "statusImportedScreenshot": {
+    "message": "✅ Foto-la fin chajé !"
+  },
+  "statusDownloadFile": {
+    "message": "⚡ Nou ka chajé pyès-la..."
+  },
+  "statusUploadFile": {
+    "message": "⚡ Nou ka chajé {ext}..."
+  },
+  "statusImportedFile": {
+    "message": "✅ Pyès-la fin chajé !"
+  },
+  "statusDrive": {
+    "message": "☁️ Lyannaj' évè Google Drive-la..."
+  },
+  "statusImportedDrive": {
+    "message": "✅ Pyès Google Drive-la senkwonizé !"
+  },
+  "statusYoutube": {
+    "message": "YouTube détékté → chajman natif..."
+  },
+  "statusSendUrl": {
+    "message": "Nou ka voyé URL-la ba NotebookLM..."
+  },
+  "statusImportedYoutube": {
+    "message": "✅ Vidéo YouTube-la fin chajé !"
+  },
+  "statusImportedUrl": {
+    "message": "✅ URL-la fin chajé !"
+  },
+  "statusDomCapture": {
+    "message": "Nou ka mandé pou kenbé DOM-la..."
+  },
+  "statusSendMarkdown": {
+    "message": "Nou ka voyé Markdown-la (sous tèks)..."
+  },
+  "statusImportedMarkdown": {
+    "message": "✅ Markdown-la fin chajé !"
+  },
+  "statusCheckQuota": {
+    "message": "Nou ka gadé sé kota a sékirité-la..."
+  },
+  "statusSendPdf": {
+    "message": "Nou ka voyé PDF-la (Séwvè a Google)..."
+  },
+  "statusImportedPdf": {
+    "message": "✅ PDF-la fin chajé !"
+  },
+  "errGetNotebooks": {
+    "message": "Nou pa rivé jwenn sé kayé-w yo. Véyé konèksyon a-w é rechajé.",
+    "description": "Erè lè nou ka chèché lis kayé-yo"
+  },
+  "errSelectionFailed": {
+    "message": "Nou pa rivé chajé mòso-la sa. Réésayé.",
+    "description": "Erè lè nou ka chajé on sélèksyon"
+  },
+  "errWorkflowFailed": {
+    "message": "On bab rive pandan chajman-an. Gadé konsòl-la pou sav sa ki pasé.",
+    "description": "Erè jénéral nan wòkflo chajman"
+  },
+  "errInjectionFailed": {
+    "message": "Nou pa ni dwa aktivé klipè-la asi paj-la sa (paj sistèm ében paj fèmen).",
+    "description": "Erè injèksyon skript asi on paj ki fèmen"
+  }
 }
