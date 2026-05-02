@@ -220,6 +220,10 @@ notebooklm-magic-clipper/
 
 ## 📋 Changelog récent
 
+### v5.2.3 — i18n complète : 3 nouvelles clés, 6 locales
+- fix(i18n) : Ajout des clés `popupLabelFormat`, `popupStatusReady` et `btnClose` dans les 6 locales (FR, EN, ES, DE, VI, GCF).
+- Fichiers modifiés : `_locales/*/messages.json`, `src/popup/popup.html`
+
 ### v5.2.2
 - fix(i18n) : le sélecteur de langue est désormais pleinement opérationnel pour toutes les locales (updateCaptureButtonLabel migré vers t())
 
@@ -309,4 +313,4 @@ notebooklm-magic-clipper/
 ---
 
 *Projet développé selon la méthodologie **Spec-Driven Development (SDD)**.*
-*Version 5.2.2 — Mai 2026*
+*Version 5.2.3 — Mai 2026*
