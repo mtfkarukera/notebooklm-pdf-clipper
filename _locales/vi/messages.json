@@ -320,58 +320,34 @@
     "message": "Không thể kích hoạt clipper trên trang này (trang hệ thống hoặc bị hạn chế).",
     "description": "Lỗi khi tiêm script trên trang bị hạn chế"
   },
+  "popupTitleAccountSwitcher": {
+    "message": "Chuyển đổi tài khoản Google"
+  },
   "statusConnecting": {
-    "message": "Đang kết nối...",
-    "description": "Văn bản ban đầu của huy hiệu xác thực khi tải"
+    "message": "Đang kết nối..."
   },
-  "btnCreateNotebook": {
-    "message": "Tạo sổ tay mới",
-    "description": "Chú thích cho nút + tạo sổ tay"
-  },
-  "btnCancelSelection": {
-    "message": "Hủy",
-    "description": "Chú thích cho nút ✕ xóa lựa chọn đang chờ"
+  "btnCreateNotebookTitle": {
+    "message": "Tạo sổ tay mới"
   },
   "btnPdfTitle": {
-    "message": "Hình ảnh nhúng, bố cục trực quan",
-    "description": "Chú thích cho nút định dạng PDF"
+    "message": "Hình ảnh nhúng, bố cục trực quan"
   },
   "btnMarkdownTitle": {
-    "message": "Bảng hoàn hảo, siêu nhẹ, gốc Gemini",
-    "description": "Chú thích cho nút định dạng Markdown"
+    "message": "Bảng hoàn hảo, siêu nhẹ, nguyên bản cho Gemini"
   },
   "btnUrlTitle": {
-    "message": "Nhập tức thì — NotebookLM quét trang",
-    "description": "Chú thích cho nút định dạng URL"
+    "message": "Nhập ngay lập tức — NotebookLM trích xuất trang"
   },
   "btnScreenshotTitle": {
-    "message": "Chụp viewport hiển thị dưới dạng PNG",
-    "description": "Chú thích cho nút Screenshot"
+    "message": "Chụp vùng nhìn thấy được dưới dạng PNG"
   },
   "btnDriveTitle": {
-    "message": "Đồng bộ gốc với Google Drive",
-    "description": "Chú thích cho nút Drive"
+    "message": "Đồng bộ hóa Google Drive gốc"
   },
   "btnDirectTitle": {
-    "message": "Nhập tệp gốc nguyên trạng",
-    "description": "Chú thích cho nút Nhập trực tiếp"
+    "message": "Nhập tệp gốc nguyên bản"
   },
-  "notifSuccessTitle": {
-    "message": "Magic Clipper cho NotebookLM",
-    "description": "Tiêu đề thông báo thành công"
-  },
-  "notifSelectionImported": {
-    "message": "Đã nhập lựa chọn từ \"{title}\"",
-    "description": "Nội dung thông báo sau khi nhập lựa chọn",
-    "placeholders": {
-      "title": { "content": "$1", "example": "Trang của tôi" }
-    }
-  },
-  "formatLabelPdf": { "message": "PDF" },
-  "formatLabelMarkdown": { "message": "Markdown" },
-  "formatLabelUrl": { "message": "URL" },
-  "formatLabelScreenshot": { "message": "Ảnh chụp màn hình" },
-  "formatLabelDirect": { "message": "Nhập trực tiếp" },
-  "formatLabelDrive": { "message": "Google Drive" },
-  "formatLabelSelection": { "message": "Lựa chọn văn bản" }
+  "btnClearSelectionTitle": {
+    "message": "Hủy"
+  }
 }

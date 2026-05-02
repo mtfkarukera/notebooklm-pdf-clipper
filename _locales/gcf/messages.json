@@ -320,58 +320,34 @@
     "message": "Nou pa ni dwa aktivé klipè-la asi paj-la sa (paj sistèm ében paj fèmen).",
     "description": "Erè injèksyon skript asi on paj ki fèmen"
   },
+  "popupTitleAccountSwitcher": {
+    "message": "Chanjé kont Google"
+  },
   "statusConnecting": {
-    "message": "Lyannaj...",
-    "description": "Tèks a débagay nan badj otantifikasyon-an"
+    "message": "Ka konèkté..."
   },
-  "btnCreateNotebook": {
-    "message": "Kréyé on nouvo kayé",
-    "description": "Titr a bouton + ki ka kréyé on kayé"
-  },
-  "btnCancelSelection": {
-    "message": "Anyilé",
-    "description": "Titr a bouton ✕ ki ka efasé tèks-la ka tann"
+  "btnCreateNotebookTitle": {
+    "message": "Kréyé an nouvo kané"
   },
   "btnPdfTitle": {
-    "message": "Imaj andan, mizanpaj vizièl",
-    "description": "Titr a bouton format PDF"
+    "message": "Imaj andidan, dispozisyon vizyèl"
   },
   "btnMarkdownTitle": {
-    "message": "Tablèl pawfè, léjé pétet, natif Gemini",
-    "description": "Titr a bouton format Markdown"
+    "message": "Tab parfè, byen léjé, natif-natal pou Gemini"
   },
   "btnUrlTitle": {
-    "message": "Chajman rapid — NotebookLM ka wopsiyoné paj-la",
-    "description": "Titr a bouton format URL"
+    "message": "Enpòté la menm — NotebookLM ka pwan paj la"
   },
   "btnScreenshotTitle": {
-    "message": "Kenbé sa'w ka vwè an PNG",
-    "description": "Titr a bouton Screenshot"
+    "message": "Pwan on foto sa ou ka vwè (PNG)"
   },
   "btnDriveTitle": {
-    "message": "Senkwonizasyon natif évè Google Drive",
-    "description": "Titr a bouton Drive"
+    "message": "Senkronizasyon Google Drive natif-natal"
   },
   "btnDirectTitle": {
-    "message": "Chajé pyès-la kòm li yé a",
-    "description": "Titr a bouton Chajé dirèk"
+    "message": "Enpòté fichyé-la kon i yé"
   },
-  "notifSuccessTitle": {
-    "message": "Magic Clipper ba NotebookLM",
-    "description": "Titr a notifikasyon siksè"
-  },
-  "notifSelectionImported": {
-    "message": "Tèks-la fin chajé dépi \"{title}\"",
-    "description": "Kò a notifikasyon apwè chajman on sélèksyon",
-    "placeholders": {
-      "title": { "content": "$1", "example": "Paj mwen" }
-    }
-  },
-  "formatLabelPdf": { "message": "PDF" },
-  "formatLabelMarkdown": { "message": "Markdown" },
-  "formatLabelUrl": { "message": "URL" },
-  "formatLabelScreenshot": { "message": "Screenshot" },
-  "formatLabelDirect": { "message": "Chajé dirèk" },
-  "formatLabelDrive": { "message": "Google Drive" },
-  "formatLabelSelection": { "message": "Mòso tèks" }
+  "btnClearSelectionTitle": {
+    "message": "Anilé"
+  }
 }

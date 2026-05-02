@@ -1,10 +1,10 @@
 {
   "extensionName": {
-    "message": "Magic Clipper für NotebookLM",
+    "message": "Magic Clipper for NotebookLM",
     "description": "Extension name displayed in Firefox about:addons"
   },
   "extensionDescription": {
-    "message": "Erfassen, bereinigen und importieren Sie jede Webseite sofort und mit magischer Präzision in Google NotebookLM.",
+    "message": "Erfassen, bereinigen und importieren Sie jede Webseite nahtlos in Google NotebookLM mit magischer Präzision.",
     "description": "Extension description displayed in Firefox about:addons"
   },
   "popupTitleCapture": {
@@ -12,11 +12,11 @@
     "description": "Main popup heading"
   },
   "popupLabelSelectNotebook": {
-    "message": "Notizbuch auswählen",
+    "message": "Wählen Sie ein Notizbuch",
     "description": "Label for notebook selection"
   },
   "popupPlaceholderSearchNotebook": {
-    "message": "Notizbücher suchen...",
+    "message": "Notizbücher durchsuchen...",
     "description": "Placeholder for Fast Research input"
   },
   "popupLabelLocale": {
@@ -28,7 +28,7 @@
     "description": "Button label — export as PDF"
   },
   "btnPdfAriaLabel": {
-    "message": "Die Seite als PDF exportieren und in NotebookLM importieren",
+    "message": "Seite als PDF exportieren und in NotebookLM importieren",
     "description": "Accessible label for the PDF button"
   },
   "btnMarkdown": {
@@ -36,7 +36,7 @@
     "description": "Button label — export as Markdown"
   },
   "btnMarkdownAriaLabel": {
-    "message": "Die Seite als Markdown exportieren und in NotebookLM importieren",
+    "message": "Seite als Markdown exportieren und in NotebookLM importieren",
     "description": "Accessible label for the Markdown button"
   },
   "btnUrl": {
@@ -44,7 +44,7 @@
     "description": "Button label — send URL"
   },
   "btnUrlAriaLabel": {
-    "message": "Die direkte URL an NotebookLM senden",
+    "message": "Direkte URL an NotebookLM senden",
     "description": "Accessible label for the URL button"
   },
   "btnScreenshot": {
@@ -52,7 +52,7 @@
     "description": "Button label — capture screenshot"
   },
   "btnScreenshotAriaLabel": {
-    "message": "Einen Screenshot erstellen und in NotebookLM importieren",
+    "message": "Screenshot erfassen und in NotebookLM importieren",
     "description": "Accessible label for the Screenshot button"
   },
   "btnDirect": {
@@ -60,7 +60,7 @@
     "description": "Button label — direct import"
   },
   "btnDirectAriaLabel": {
-    "message": "Die Datei direkt in NotebookLM importieren",
+    "message": "Datei direkt in NotebookLM importieren",
     "description": "Accessible label for the Direct Import button"
   },
   "btnDrive": {
@@ -72,19 +72,19 @@
     "description": "Accessible label for the Google Drive button"
   },
   "intentNoteLabelVisible": {
-    "message": "Suchintention (optional)",
+    "message": "Forschungsabsicht (optional)",
     "description": "Label for the intent note field"
   },
   "intentNotePlaceholder": {
-    "message": "Optional: Beschreiben Sie Ihre Suchintention...",
+    "message": "Optional: Beschreiben Sie Ihre Forschungsabsicht...",
     "description": "Placeholder text for the intent note textarea"
   },
   "statusCapturing": {
-    "message": "Wird erfasst…",
+    "message": "Erfassen…",
     "description": "Status message when capturing begins"
   },
   "statusUploading": {
-    "message": "Wird hochgeladen… ($PERCENT$%)",
+    "message": "Hochladen… ($PERCENT$%)",
     "description": "Upload progress message with substitution",
     "placeholders": {
       "PERCENT": {
@@ -94,7 +94,7 @@
     }
   },
   "statusSuccess": {
-    "message": "Import erfolgreich ✓",
+    "message": "Erfolgreich importiert ✓",
     "description": "Status message on success"
   },
   "statusProcessing": {
@@ -110,7 +110,7 @@
     "description": "User-facing error on 401/403"
   },
   "errorUploadSessionMissing": {
-    "message": "Fehler bei der Initialisierung des Uploads.",
+    "message": "Fehler bei der Initialisierung der Upload-Sitzung.",
     "description": "User-facing error when upload URL is missing"
   },
   "errorTimeout": {
@@ -130,7 +130,7 @@
     "description": "Context menu item to import selected text"
   },
   "popupLabelFormat": {
-    "message": "Format"
+    "message": "Importformat"
   },
   "popupStatusReady": {
     "message": "Bereit"
@@ -172,7 +172,7 @@
     "message": "Notizbuch nicht gefunden."
   },
   "errNoSearchTerm": {
-    "message": "Gib einen Notizbuchnamen in das Suchfeld ein."
+    "message": "Geben Sie einen Notizbuchnamen in das Suchfeld ein."
   },
   "creatingNotebook": {
     "message": "Notizbuch \"{title}\" wird erstellt..."
@@ -180,24 +180,20 @@
   "notebookCreated": {
     "message": "Notizbuch \"{title}\" erstellt ✅"
   },
-  "errCreateNotebook": {
-    "message": "Notizbuch konnte nicht erstellt werden. Überprüfen Sie Ihre Verbindung.",
-    "description": "Fehler beim Erstellen eines Notizbuchs"
-  },
   "errGeneric": {
     "message": "Fehler: {msg}"
   },
   "errNoNotebook": {
-    "message": "Bitte zuerst ein Notizbuch auswählen."
+    "message": "Bitte wählen Sie zuerst ein Notizbuch aus."
   },
   "importingSelection": {
     "message": "📋 Auswahl wird importiert..."
   },
   "importingFormat": {
-    "message": "Import als {label}..."
+    "message": "Wird als {label} importiert..."
   },
   "warnLocalFile": {
-    "message": "⚠️ Lokale Datei — Direktimport nicht verfügbar."
+    "message": "⚠️ Lokale Datei — direkter Import ist nicht verfügbar."
   },
   "errDownload": {
     "message": "❌ Fehler"
@@ -206,25 +202,25 @@
     "message": "Ein Fehler ist aufgetreten."
   },
   "apiChanged": {
-    "message": "Die NotebookLM-API wurde von Google aktualisiert. Ein Extension-Update ist erforderlich."
+    "message": "Die NotebookLM-API wurde von Google aktualisiert. Ein Erweiterungsupdate ist erforderlich."
   },
   "sessionExpired": {
-    "message": "Sitzung abgelaufen. Bitte erneut auf notebooklm.google.com anmelden."
+    "message": "Sitzung abgelaufen. Bitte melden Sie sich erneut unter notebooklm.google.com an."
   },
   "uploadSessionFailed": {
-    "message": "Upload fehlgeschlagen: Upload-Sitzung konnte nicht gestartet werden."
+    "message": "Upload fehlgeschlagen: Upload-Sitzung konnte nicht abgerufen werden."
   },
   "timeout": {
-    "message": "Zeitüberschreitung. Verbindung prüfen und erneut versuchen."
+    "message": "Anfrage abgelaufen. Überprüfen Sie Ihre Verbindung und versuchen Sie es erneut."
   },
   "unexpectedError": {
-    "message": "Ein unerwarteter Fehler ist aufgetreten. Konsole für Details prüfen."
+    "message": "Ein unerwarteter Fehler ist aufgetreten. Überprüfen Sie die Konsole für Details."
   },
   "errFileReader": {
-    "message": "Datei konnte nicht gelesen werden."
+    "message": "Dateilesefehler."
   },
   "errNoCapture": {
-    "message": "Keine Aufnahme verfügbar."
+    "message": "Keine Erfassung verfügbar."
   },
   "statusCreatingNb": {
     "message": "Notizbuch wird erstellt..."
@@ -236,13 +232,13 @@
     "message": "✅ Auswahl importiert!"
   },
   "notifSelectionTitle": {
-    "message": "📎 Auswahl in NotebookLM speichern"
+    "message": "📎 Auswahl in NotebookLM clippen"
   },
   "notifSelectionCaptured": {
     "message": "Auswahl erfasst ✓"
   },
   "notifSelectionMsg": {
-    "message": "Klicke auf den NotebookLM Web Clipper-Button, um ein Notizbuch auszuwählen."
+    "message": "Klicken Sie auf die Schaltfläche NotebookLM Web Clipper, um ein Notizbuch auszuwählen."
   },
   "notifSuccessMsg": {
     "message": "\"{title}\" erfolgreich als {format} hinzugefügt!"
@@ -251,7 +247,7 @@
     "message": "Persönliche Sitzung wird abgerufen..."
   },
   "statusScreenshot": {
-    "message": "📸 Viewport wird erfasst..."
+    "message": "📸 Ansichtsbereich wird erfasst..."
   },
   "statusUploadScreenshot": {
     "message": "📸 Screenshot wird hochgeladen..."
@@ -269,7 +265,7 @@
     "message": "✅ Datei direkt importiert!"
   },
   "statusDrive": {
-    "message": "☁️ Verbindung mit Google Drive..."
+    "message": "☁️ Verbindung mit Google Drive wird hergestellt..."
   },
   "statusImportedDrive": {
     "message": "✅ Google Drive-Dokument synchronisiert!"
@@ -287,16 +283,16 @@
     "message": "✅ URL importiert!"
   },
   "statusDomCapture": {
-    "message": "DOM-Aufnahme wird angefordert..."
+    "message": "DOM-Erfassung wird angefordert..."
   },
   "statusSendMarkdown": {
-    "message": "Markdown wird gesendet (Textquelle)..."
+    "message": "Markdown (Textquelle) wird gesendet..."
   },
   "statusImportedMarkdown": {
     "message": "✅ Markdown importiert!"
   },
   "statusCheckQuota": {
-    "message": "Sicherheitskontingente werden geprüft..."
+    "message": "Sicherheitskontingente werden überprüft..."
   },
   "statusSendPdf": {
     "message": "PDF wird gesendet (Google-Server)..."
@@ -305,73 +301,53 @@
     "message": "✅ PDF importiert!"
   },
   "errGetNotebooks": {
-    "message": "Notizbücher konnten nicht abgerufen werden. Überprüfen Sie Ihre Verbindung.",
-    "description": "Fehler beim Abrufen der Notizbuchliste"
+    "message": "Ihre Notizbücher konnten nicht abgerufen werden. Überprüfen Sie Ihre Verbindung und laden Sie die Seite neu.",
+    "description": "Error when listing notebooks fails"
+  },
+  "errCreateNotebook": {
+    "message": "Das Notizbuch konnte nicht erstellt werden. Überprüfen Sie Ihre Verbindung und versuchen Sie es erneut.",
+    "description": "Error when notebook creation fails"
   },
   "errSelectionFailed": {
-    "message": "Auswahl konnte nicht importiert werden. Bitte erneut versuchen.",
-    "description": "Fehler beim Importieren einer Auswahl"
+    "message": "Die Auswahl konnte nicht importiert werden. Bitte versuchen Sie es erneut.",
+    "description": "Error when selection import fails"
   },
   "errWorkflowFailed": {
-    "message": "Beim Import ist ein Fehler aufgetreten. Überprüfen Sie die Konsole.",
-    "description": "Allgemeiner Workflow-Fehler"
+    "message": "Während des Imports ist ein Fehler aufgetreten. Überprüfen Sie die Konsole für Details.",
+    "description": "Generic workflow error"
   },
   "errInjectionFailed": {
     "message": "Der Clipper kann auf dieser Seite nicht aktiviert werden (System- oder eingeschränkte Seite).",
-    "description": "Fehler bei der Skriptinjektion auf einer gesperrten Seite"
+    "description": "Error when script injection fails on a restricted page"
+  },
+  "popupTitleAccountSwitcher": {
+    "message": "Google-Konto wechseln"
   },
   "statusConnecting": {
-    "message": "Verbinde...",
-    "description": "Anfangstext des Auth-Status-Badges beim Laden"
+    "message": "Verbindung wird hergestellt..."
   },
-  "btnCreateNotebook": {
-    "message": "Neues Notizbuch erstellen",
-    "description": "Tooltip für den +-Button, der ein Notizbuch erstellt"
-  },
-  "btnCancelSelection": {
-    "message": "Abbrechen",
-    "description": "Tooltip für den ✕-Button, der die ausstehende Auswahl löscht"
+  "btnCreateNotebookTitle": {
+    "message": "Neues Notizbuch erstellen"
   },
   "btnPdfTitle": {
-    "message": "Eingebettete Bilder, visuelles Layout",
-    "description": "Tooltip für den PDF-Format-Button"
+    "message": "Eingebettete Bilder, visuelles Layout"
   },
   "btnMarkdownTitle": {
-    "message": "Perfekte Tabellen, ultraleicht, nativ Gemini",
-    "description": "Tooltip für den Markdown-Format-Button"
+    "message": "Perfekte Tabellen, ultraleicht, nativ für Gemini"
   },
   "btnUrlTitle": {
-    "message": "Sofortimport — NotebookLM liest die Seite",
-    "description": "Tooltip für den URL-Format-Button"
+    "message": "Sofortiger Import — NotebookLM liest die Seite aus"
   },
   "btnScreenshotTitle": {
-    "message": "Sichtbaren Viewport als PNG aufnehmen",
-    "description": "Tooltip für den Screenshot-Button"
+    "message": "Sichtbaren Bereich als PNG erfassen"
   },
   "btnDriveTitle": {
-    "message": "Nativer Google Drive-Sync",
-    "description": "Tooltip für den Drive-Button"
+    "message": "Native Google Drive-Synchronisierung"
   },
   "btnDirectTitle": {
-    "message": "Originaldatei direkt importieren",
-    "description": "Tooltip für den Direktimport-Button"
+    "message": "Originaldatei unverändert importieren"
   },
-  "notifSuccessTitle": {
-    "message": "Magic Clipper für NotebookLM",
-    "description": "Titel der Erfolgsmeldung"
-  },
-  "notifSelectionImported": {
-    "message": "Auswahl importiert von \"{title}\"",
-    "description": "Inhalt der Benachrichtigung nach dem Importieren einer Auswahl",
-    "placeholders": {
-      "title": { "content": "$1", "example": "Meine Seite" }
-    }
-  },
-  "formatLabelPdf": { "message": "PDF" },
-  "formatLabelMarkdown": { "message": "Markdown" },
-  "formatLabelUrl": { "message": "URL" },
-  "formatLabelScreenshot": { "message": "Screenshot" },
-  "formatLabelDirect": { "message": "Direkter Import" },
-  "formatLabelDrive": { "message": "Google Drive" },
-  "formatLabelSelection": { "message": "Textauswahl" }
+  "btnClearSelectionTitle": {
+    "message": "Abbrechen"
+  }
 }

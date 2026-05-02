@@ -110,14 +110,54 @@ function parseDriveUrl(url) {
   }
 }
 
+/**
+ * Devine le MIME type d'un fichier Drive à partir du titre de l'onglet.
+ * Le titre Firefox suit le format : "nomfichier.ext - Google Drive"
+ *
+ * @param {string} title - Titre de l'onglet Firefox.
+ * @returns {string} MIME type deviné, ou 'application/pdf' par défaut.
+ */
+function guessMimeFromTitle(title) {
+  const EXTENSION_MAP = {
+    'pdf': 'application/pdf',
+    'txt': 'text/plain',
+    'md': 'text/markdown',
+    'csv': 'text/csv',
+    'docx': 'application/vnd.openxmlformats-officedocument.wordprocessingml.document',
+    'pptx': 'application/vnd.openxmlformats-officedocument.presentationml.presentation',
+    'xlsx': 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
+    'epub': 'application/epub+zip',
+    'png': 'image/png',
+    'jpg': 'image/jpeg',
+    'jpeg': 'image/jpeg',
+    'gif': 'image/gif',
+    'webp': 'image/webp',
+    'svg': 'image/svg+xml',
+    'mp3': 'audio/mpeg',
+    'wav': 'audio/wav',
+    'mp4': 'video/mp4',
+  };
+
+  // Retirer le suffixe " - Google Drive" et extraire l'extension
+  const cleaned = title.replace(/\s*-\s*Google Drive\s*$/i, '').trim();
+  const dotIndex = cleaned.lastIndexOf('.');
+  if (dotIndex > 0) {
+      const ext = cleaned.substring(dotIndex + 1).toLowerCase();
+      if (EXTENSION_MAP[ext]) return EXTENSION_MAP[ext];
+  }
+  return 'application/pdf'; // Fallback le plus courant sur Drive
+}
+
 // Export pour le contexte du Content Script (s'il n'y a pas de modules purs)
 window.ClipperUtils = {
   blobToBase64,
   parseDriveUrl,
+  guessMimeFromTitle,
 };
 
 // Export ESM optionnel (pour les modules ES6 comme background.js)
 if (typeof exports !== 'undefined') {
   exports.blobToBase64 = blobToBase64;
   exports.parseDriveUrl = parseDriveUrl;
+  exports.guessMimeFromTitle = guessMimeFromTitle;
 }

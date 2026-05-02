@@ -138,61 +138,168 @@
   "btnClose": {
     "message": "✖ Close"
   },
-  "linkOpenNotebook": { "message": "Open notebook →" },
-  "linkDownloadFile": { "message": "Download {ext} ↓" },
-  "linkDownloading":  { "message": "Downloading..." },
-  "linkDownloaded":   { "message": "✅ Downloaded" },
-  "statusConnected":     { "message": "Connected ({type})" },
-  "statusDisconnected":  { "message": "Disconnected" },
-  "errAuth":             { "message": "Authentication error." },
-  "loadingNotebooks":    { "message": "Loading notebooks..." },
-  "errLoadNotebooks":    { "message": "Error loading notebooks." },
-  "noNotebookFound":     { "message": "No notebook found." },
-  "notebookNotFound":    { "message": "Notebook not found." },
-  "errNoSearchTerm":     { "message": "Enter a notebook name in the search field." },
-  "creatingNotebook":    { "message": "Creating notebook \"{title}\"..." },
-  "notebookCreated":     { "message": "Notebook \"{title}\" created ✅" },
-
-  "errGeneric":          { "message": "Error: {msg}" },
-  "errNoNotebook":       { "message": "Please select a notebook first." },
-  "importingSelection":  { "message": "📋 Importing selection..." },
-  "importingFormat":     { "message": "Importing as {label}..." },
-  "warnLocalFile":       { "message": "⚠️ Local file — direct import is not available." },
-  "errDownload":         { "message": "❌ Error" },
-  "errGenericOccurred":  { "message": "An error occurred." },
-  "apiChanged":           { "message": "The NotebookLM API has been updated by Google. An extension update is required." },
-  "sessionExpired":       { "message": "Session expired. Please sign in again at notebooklm.google.com." },
-  "uploadSessionFailed":  { "message": "Upload failed: could not obtain an upload session." },
-  "timeout":              { "message": "Request timed out. Check your connection and try again." },
-  "unexpectedError":      { "message": "An unexpected error occurred. Check the console for details." },
-  "errFileReader":        { "message": "File reading failed." },
-  "errNoCapture":         { "message": "No capture available." },
-  "statusCreatingNb":     { "message": "Creating notebook..." },
-  "statusUploadSelection":{ "message": "📋 Uploading selection..." },
-  "statusImportedSelection":{ "message": "✅ Selection imported!" },
-  "notifSelectionTitle":  { "message": "📎 Clip selection to NotebookLM" },
-  "notifSelectionCaptured":{ "message": "Selection captured ✓" },
-  "notifSelectionMsg":    { "message": "Click the NotebookLM Web Clipper button to choose a notebook." },
-  "notifSuccessMsg":      { "message": "\"{title}\" added as {format} successfully!" },
-  "statusFetchSession":   { "message": "Retrieving Personal Session..." },
-  "statusScreenshot":     { "message": "📸 Capturing viewport..." },
-  "statusUploadScreenshot":{ "message": "📸 Uploading screenshot..." },
-  "statusImportedScreenshot":{ "message": "✅ Screenshot imported!" },
-  "statusDownloadFile":   { "message": "⚡ Downloading file..." },
-  "statusUploadFile":     { "message": "⚡ Uploading {ext}..." },
-  "statusImportedFile":   { "message": "✅ File imported directly!" },
-  "statusDrive":          { "message": "☁️ Connecting to Google Drive..." },
-  "statusImportedDrive":  { "message": "✅ Google Drive document synced!" },
-  "statusYoutube":        { "message": "YouTube detected → native import..." },
-  "statusSendUrl":        { "message": "Sending URL to NotebookLM..." },
-  "statusImportedYoutube":{ "message": "✅ YouTube video imported!" },
-  "statusImportedUrl":    { "message": "✅ URL imported!" },
-  "statusDomCapture":     { "message": "Requesting DOM capture..." },
-  "statusSendMarkdown":   { "message": "Sending Markdown (text source)..." },
-  "statusImportedMarkdown":{ "message": "✅ Markdown imported!" },
-  "statusCheckQuota":     { "message": "Checking security quotas..." },
-  "statusSendPdf":        { "message": "Sending PDF (Google Servers)..." },
-  "statusImportedPdf":    { "message": "✅ PDF imported!" },
+  "linkOpenNotebook": {
+    "message": "Open notebook →"
+  },
+  "linkDownloadFile": {
+    "message": "Download {ext} ↓"
+  },
+  "linkDownloading": {
+    "message": "Downloading..."
+  },
+  "linkDownloaded": {
+    "message": "✅ Downloaded"
+  },
+  "statusConnected": {
+    "message": "Connected ({type})"
+  },
+  "statusDisconnected": {
+    "message": "Disconnected"
+  },
+  "errAuth": {
+    "message": "Authentication error."
+  },
+  "loadingNotebooks": {
+    "message": "Loading notebooks..."
+  },
+  "errLoadNotebooks": {
+    "message": "Error loading notebooks."
+  },
+  "noNotebookFound": {
+    "message": "No notebook found."
+  },
+  "notebookNotFound": {
+    "message": "Notebook not found."
+  },
+  "errNoSearchTerm": {
+    "message": "Enter a notebook name in the search field."
+  },
+  "creatingNotebook": {
+    "message": "Creating notebook \"{title}\"..."
+  },
+  "notebookCreated": {
+    "message": "Notebook \"{title}\" created ✅"
+  },
+  "errGeneric": {
+    "message": "Error: {msg}"
+  },
+  "errNoNotebook": {
+    "message": "Please select a notebook first."
+  },
+  "importingSelection": {
+    "message": "📋 Importing selection..."
+  },
+  "importingFormat": {
+    "message": "Importing as {label}..."
+  },
+  "warnLocalFile": {
+    "message": "⚠️ Local file — direct import is not available."
+  },
+  "errDownload": {
+    "message": "❌ Error"
+  },
+  "errGenericOccurred": {
+    "message": "An error occurred."
+  },
+  "apiChanged": {
+    "message": "The NotebookLM API has been updated by Google. An extension update is required."
+  },
+  "sessionExpired": {
+    "message": "Session expired. Please sign in again at notebooklm.google.com."
+  },
+  "uploadSessionFailed": {
+    "message": "Upload failed: could not obtain an upload session."
+  },
+  "timeout": {
+    "message": "Request timed out. Check your connection and try again."
+  },
+  "unexpectedError": {
+    "message": "An unexpected error occurred. Check the console for details."
+  },
+  "errFileReader": {
+    "message": "File reading failed."
+  },
+  "errNoCapture": {
+    "message": "No capture available."
+  },
+  "statusCreatingNb": {
+    "message": "Creating notebook..."
+  },
+  "statusUploadSelection": {
+    "message": "📋 Uploading selection..."
+  },
+  "statusImportedSelection": {
+    "message": "✅ Selection imported!"
+  },
+  "notifSelectionTitle": {
+    "message": "📎 Clip selection to NotebookLM"
+  },
+  "notifSelectionCaptured": {
+    "message": "Selection captured ✓"
+  },
+  "notifSelectionMsg": {
+    "message": "Click the NotebookLM Web Clipper button to choose a notebook."
+  },
+  "notifSuccessMsg": {
+    "message": "\"{title}\" added as {format} successfully!"
+  },
+  "statusFetchSession": {
+    "message": "Retrieving Personal Session..."
+  },
+  "statusScreenshot": {
+    "message": "📸 Capturing viewport..."
+  },
+  "statusUploadScreenshot": {
+    "message": "📸 Uploading screenshot..."
+  },
+  "statusImportedScreenshot": {
+    "message": "✅ Screenshot imported!"
+  },
+  "statusDownloadFile": {
+    "message": "⚡ Downloading file..."
+  },
+  "statusUploadFile": {
+    "message": "⚡ Uploading {ext}..."
+  },
+  "statusImportedFile": {
+    "message": "✅ File imported directly!"
+  },
+  "statusDrive": {
+    "message": "☁️ Connecting to Google Drive..."
+  },
+  "statusImportedDrive": {
+    "message": "✅ Google Drive document synced!"
+  },
+  "statusYoutube": {
+    "message": "YouTube detected → native import..."
+  },
+  "statusSendUrl": {
+    "message": "Sending URL to NotebookLM..."
+  },
+  "statusImportedYoutube": {
+    "message": "✅ YouTube video imported!"
+  },
+  "statusImportedUrl": {
+    "message": "✅ URL imported!"
+  },
+  "statusDomCapture": {
+    "message": "Requesting DOM capture..."
+  },
+  "statusSendMarkdown": {
+    "message": "Sending Markdown (text source)..."
+  },
+  "statusImportedMarkdown": {
+    "message": "✅ Markdown imported!"
+  },
+  "statusCheckQuota": {
+    "message": "Checking security quotas..."
+  },
+  "statusSendPdf": {
+    "message": "Sending PDF (Google Servers)..."
+  },
+  "statusImportedPdf": {
+    "message": "✅ PDF imported!"
+  },
   "errGetNotebooks": {
     "message": "Could not retrieve your notebooks. Check your connection and reload.",
     "description": "Error when listing notebooks fails"
@@ -213,58 +320,34 @@
     "message": "Cannot activate the clipper on this page (system or restricted page).",
     "description": "Error when script injection fails on a restricted page"
   },
+  "popupTitleAccountSwitcher": {
+    "message": "Switch Google account"
+  },
   "statusConnecting": {
-    "message": "Connecting...",
-    "description": "Initial text of the auth status badge while loading"
+    "message": "Connecting..."
   },
-  "btnCreateNotebook": {
-    "message": "Create a new notebook",
-    "description": "Tooltip for the + button that creates a new notebook"
-  },
-  "btnCancelSelection": {
-    "message": "Cancel",
-    "description": "Tooltip for the ✕ button that clears a pending selection"
+  "btnCreateNotebookTitle": {
+    "message": "Create a new notebook"
   },
   "btnPdfTitle": {
-    "message": "Embedded images, visual layout",
-    "description": "Tooltip for the PDF format button"
+    "message": "Embedded images, visual layout"
   },
   "btnMarkdownTitle": {
-    "message": "Perfect tables, ultra-light, native Gemini",
-    "description": "Tooltip for the Markdown format button"
+    "message": "Perfect tables, ultra-light, native Gemini"
   },
   "btnUrlTitle": {
-    "message": "Instant import — NotebookLM scrapes the page",
-    "description": "Tooltip for the URL format button"
+    "message": "Instant import — NotebookLM scrapes the page"
   },
   "btnScreenshotTitle": {
-    "message": "Captures the visible viewport as PNG",
-    "description": "Tooltip for the Screenshot format button"
+    "message": "Capture visible viewport as PNG"
   },
   "btnDriveTitle": {
-    "message": "Native Google Drive sync",
-    "description": "Tooltip for the Drive format button"
+    "message": "Native Google Drive sync"
   },
   "btnDirectTitle": {
-    "message": "Import the original file as-is",
-    "description": "Tooltip for the Direct Import button"
+    "message": "Import the original file as is"
   },
-  "notifSuccessTitle": {
-    "message": "Magic Clipper for NotebookLM",
-    "description": "Title of the success notification"
-  },
-  "notifSelectionImported": {
-    "message": "Selection imported from \"{title}\"",
-    "description": "Body of the notification after a selection is imported",
-    "placeholders": {
-      "title": { "content": "$1", "example": "My Page" }
-    }
-  },
-  "formatLabelPdf": { "message": "PDF" },
-  "formatLabelMarkdown": { "message": "Markdown" },
-  "formatLabelUrl": { "message": "URL" },
-  "formatLabelScreenshot": { "message": "Screenshot" },
-  "formatLabelDirect": { "message": "Direct Import" },
-  "formatLabelDrive": { "message": "Google Drive" },
-  "formatLabelSelection": { "message": "Text selection" }
+  "btnClearSelectionTitle": {
+    "message": "Cancel"
+  }
 }

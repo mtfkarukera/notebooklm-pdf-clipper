@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="fr">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -17,8 +17,8 @@
         <option value="auto">Auto</option>
         <option value="gcf">Kréyòl</option>
       </select>
-      <select id="account-switcher" class="hidden" title="Changer de compte Google"></select>
-      <div id="auth-status" class="status-badge status-loading" data-i18n="statusConnecting"></div>
+      <select id="account-switcher" class="hidden" title="Changer de compte Google" data-i18n-title="popupTitleAccountSwitcher"></select>
+      <div id="auth-status" class="status-badge status-loading" data-i18n="statusConnecting">Connexion...</div>
     </div>
   </header>
 
@@ -27,12 +27,12 @@
     <label for="notebook-search" data-i18n="popupLabelSelectNotebook">Vos Carnets</label>
     <div class="input-group">
       <input type="text" id="notebook-search" placeholder="Rechercher un carnet (Fast Research)..." disabled data-i18n-placeholder="popupPlaceholderSearchNotebook" />
-      <button id="btn-create-notebook" data-i18n-title="btnCreateNotebook">+</button>
+      <button id="btn-create-notebook" title="Créer un nouveau carnet" data-i18n-title="btnCreateNotebookTitle">+</button>
     </div>
     
     <!-- Liste des carnets filtrés -->
     <div id="notebook-list" class="notebook-list">
-        <div class="placeholder-text">Veuillez patienter...</div>
+        <div class="placeholder-text" data-i18n="loadingNotebooks">Veuillez patienter...</div>
     </div>
   </section>
 
@@ -40,15 +40,15 @@
   <section class="format-section">
     <label data-i18n="popupLabelFormat">Format d'import</label>
     <div class="format-toggle" id="format-toggle">
-      <button class="format-btn active" data-format="pdf" data-i18n-title="btnPdfTitle" data-i18n="btnPdf" data-i18n-aria-label="btnPdfAriaLabel">📄 PDF</button>
-      <button class="format-btn" data-format="md" data-i18n-title="btnMarkdownTitle" data-i18n="btnMarkdown" data-i18n-aria-label="btnMarkdownAriaLabel">📝 Markdown</button>
-      <button class="format-btn" data-format="url" data-i18n-title="btnUrlTitle" data-i18n="btnUrl" data-i18n-aria-label="btnUrlAriaLabel">🔗 URL</button>
-      <button class="format-btn" data-format="screenshot" data-i18n-title="btnScreenshotTitle" data-i18n="btnScreenshot" data-i18n-aria-label="btnScreenshotAriaLabel">📸</button>
-      <button class="format-btn" data-format="drive" id="btn-drive-import" style="display: none;" data-i18n-title="btnDriveTitle" data-i18n="btnDrive" data-i18n-aria-label="btnDriveAriaLabel">☁️ Drive</button>
+      <button class="format-btn active" data-format="pdf" title="Images intégrées, mise en page visuelle" data-i18n="btnPdf" data-i18n-aria-label="btnPdfAriaLabel" data-i18n-title="btnPdfTitle">📄 PDF</button>
+      <button class="format-btn" data-format="md" title="Tables parfaites, ultra-léger, natif Gemini" data-i18n="btnMarkdown" data-i18n-aria-label="btnMarkdownAriaLabel" data-i18n-title="btnMarkdownTitle">📝 Markdown</button>
+      <button class="format-btn" data-format="url" title="Import instantané — NotebookLM scrape la page" data-i18n="btnUrl" data-i18n-aria-label="btnUrlAriaLabel" data-i18n-title="btnUrlTitle">🔗 URL</button>
+      <button class="format-btn" data-format="screenshot" title="Capture le viewport visible en PNG" data-i18n="btnScreenshot" data-i18n-aria-label="btnScreenshotAriaLabel" data-i18n-title="btnScreenshotTitle">📸</button>
+      <button class="format-btn" data-format="drive" id="btn-drive-import" style="display: none;" title="Synchronisation native Google Drive" data-i18n="btnDrive" data-i18n-aria-label="btnDriveAriaLabel" data-i18n-title="btnDriveTitle">☁️ Drive</button>
     </div>
     <!-- Bouton Import Direct : masqué par défaut, affiché dynamiquement -->
     <div id="direct-import-section" class="direct-import-section hidden">
-      <button class="format-btn format-btn-direct" data-format="direct" id="btn-direct-import" data-i18n-title="btnDirectTitle" data-i18n-aria-label="btnDirectAriaLabel">
+      <button class="format-btn format-btn-direct" data-format="direct" id="btn-direct-import" title="Importer le fichier original tel quel" data-i18n-aria-label="btnDirectAriaLabel" data-i18n-title="btnDirectTitle">
         ⚡ <span id="direct-label" data-i18n="btnDirect">Import direct</span>
       </button>
     </div>
@@ -58,9 +58,9 @@
   <section id="selection-banner" class="selection-banner hidden">
     <div class="selection-info">
       <span class="selection-icon">📋</span>
-      <span id="selection-text-preview">Sélection capturée</span>
+      <span id="selection-text-preview" data-i18n="notifSelectionCaptured">Sélection capturée</span>
     </div>
-    <button id="btn-clear-selection" class="selection-clear" data-i18n-title="btnCancelSelection">✕</button>
+    <button id="btn-clear-selection" class="selection-clear" title="Annuler" data-i18n-title="btnClearSelectionTitle">✕</button>
   </section>
 
   <!-- ACTION PRINCIPALE -->

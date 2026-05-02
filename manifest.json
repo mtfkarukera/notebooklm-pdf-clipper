@@ -10,7 +10,9 @@
       "id": "notebooklm-web-clipper@mtfkarukera",
       "strict_min_version": "142.0",
       "data_collection_permissions": {
-        "required": ["none"]
+        "required": [
+          "none"
+        ]
       }
     },
     "gecko_android": {
@@ -31,7 +33,9 @@
     "<all_urls>"
   ],
   "background": {
-    "scripts": ["src/background/background.js"],
+    "scripts": [
+      "src/background/background.js"
+    ],
     "type": "module"
   },
   "icons": {
@@ -45,8 +49,12 @@
   },
   "content_scripts": [
     {
-      "matches": ["<all_urls>"],
-      "js": ["src/content/orchestrator.js"],
+      "matches": [
+        "<all_urls>"
+      ],
+      "js": [
+        "src/content/orchestrator.js"
+      ],
       "run_at": "document_idle"
     }
   ]

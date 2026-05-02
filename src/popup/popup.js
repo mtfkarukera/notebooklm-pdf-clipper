@@ -189,15 +189,13 @@ function loadNotebooks() {
             allNotebooksCache = res.notebooks;
             renderNotebooks(allNotebooksCache);
          } else if (res && res.status === "error") {
-            const msg = res.i18nKey
-                ? (browser.i18n.getMessage(res.i18nKey) || t('errLoadNotebooks'))
-                : t('errLoadNotebooks');
+            const msg = res.i18nKey ? t(res.i18nKey) : t('errLoadNotebooks');
             setPlaceholder(uiNotebookList, msg, "color:#d32f2f;font-size:12px;margin:10px");
          } else {
             setPlaceholder(uiNotebookList, t('noNotebookFound'));
          }
     }).catch(err => {
-         setPlaceholder(uiNotebookList, 'Err: ' + err.message, 'color:#d32f2f;');
+         setPlaceholder(uiNotebookList, t('errGeneric').replace('{msg}', err.message), 'color:#d32f2f;');
          uiSearchInput.disabled = true;
     });
 }
@@ -272,9 +270,7 @@ async function createNewNotebook() {
       const notebookUrl = `https://notebooklm.google.com/notebook/${response.notebookId}`;
       updateStatus(t('notebookCreated').replace('{title}', title), "success", notebookUrl);
     } else {
-      const msg = response?.i18nKey
-          ? (browser.i18n.getMessage(response.i18nKey) || t('errCreateNotebook'))
-          : t('errCreateNotebook');
+      const msg = response?.i18nKey ? t(response.i18nKey) : t('errCreateNotebook');
       updateStatus(msg, "error");
     }
   } catch (err) {
@@ -315,14 +311,7 @@ function startCaptureProcess() {
    uiSearchInput.disabled = true;
    btnCustomSpinner.classList.remove('hidden');
 
-   const formatLabels = {
-     pdf:        t('formatLabelPdf'),
-     md:         t('formatLabelMarkdown'),
-     url:        t('formatLabelUrl'),
-     screenshot: t('formatLabelScreenshot'),
-     direct:     t('formatLabelDirect'),
-     drive:      t('formatLabelDrive')
-   };
+   const formatLabels = { pdf: 'PDF', md: 'Markdown', url: 'URL', screenshot: 'Screenshot', direct: 'Import direct', drive: 'Google Drive' };
    const label = formatLabels[currentFormat] || currentFormat;
    updateStatus(t('importingFormat').replace('{label}', label), "info");
 
@@ -407,7 +396,7 @@ async function detectActiveTabFileType() {
 
      if (result && result.directImport) {
        // Afficher le bouton Import Direct avec le label du type détecté
-       uiDirectLabel.textContent = `Import direct (${result.label})`;
+       uiDirectLabel.textContent = `${t('btnDirect')} (${result.label})`;
        uiDirectImportSection.classList.remove('hidden');
 
       if (result.isLocal) {
@@ -494,7 +483,7 @@ async function checkPendingSelection() {
      // Afficher le bandeau avec aperçu
      const wordCount = sel.text.split(/\s+/).filter(w => w.length > 0).length;
      const preview = sel.text.substring(0, 60) + (sel.text.length > 60 ? '…' : '');
-     uiSelectionPreview.textContent = `"${preview}" (${wordCount} mots)`;
+     uiSelectionPreview.textContent = `"${preview}" (${wordCount})`;
      uiSelectionBanner.classList.remove('hidden');
      
      // Basculer sur le format "selection" et griser TOUS les boutons de format
@@ -583,13 +572,16 @@ browser.runtime.onMessage.addListener(message => {
   if (message.type === "STATUS_UPDATE") {
     let displayText;
     if (message.i18nKey) {
-        displayText = browser.i18n.getMessage(message.i18nKey)
-            || message.text
-            || t('errGenericOccurred');
+        let subs = message.i18nSubs;
+        // background.js envoie parfois un objet {ext: "PDF"}, on le convertit en tableau pour t()
+        if (subs && typeof subs === 'object' && !Array.isArray(subs)) {
+            subs = Object.values(subs);
+        }
+        displayText = t(message.i18nKey, subs);
     } else {
         displayText = message.status === "error"
-            ? (message.text || t('errGenericOccurred'))
-            : message.text;
+            ? (message.text || message.userMessage || t('errGenericOccurred'))
+            : (message.text || message.userMessage || "");
     }
     updateStatus(displayText, message.status, message.linkUrl, message.showDownload);
     if(message.status === "error" || message.status === "success") {

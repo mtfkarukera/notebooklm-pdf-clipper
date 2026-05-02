@@ -320,58 +320,34 @@
     "message": "Impossible d'activer le clipper sur cette page (page système ou restreinte).",
     "description": "Erreur d'injection de script sur une page restreinte"
   },
+  "popupTitleAccountSwitcher": {
+    "message": "Changer de compte Google"
+  },
   "statusConnecting": {
-    "message": "Connexion...",
-    "description": "Texte initial du badge d'authentification pendant le chargement"
+    "message": "Connexion..."
   },
-  "btnCreateNotebook": {
-    "message": "Créer un nouveau carnet",
-    "description": "Infobulle du bouton + qui crée un nouveau carnet"
-  },
-  "btnCancelSelection": {
-    "message": "Annuler",
-    "description": "Infobulle du bouton ✕ qui efface la sélection en attente"
+  "btnCreateNotebookTitle": {
+    "message": "Créer un nouveau carnet"
   },
   "btnPdfTitle": {
-    "message": "Images intégrées, mise en page visuelle",
-    "description": "Infobulle du bouton format PDF"
+    "message": "Images intégrées, mise en page visuelle"
   },
   "btnMarkdownTitle": {
-    "message": "Tables parfaites, ultra-léger, natif Gemini",
-    "description": "Infobulle du bouton format Markdown"
+    "message": "Tables parfaites, ultra-léger, natif Gemini"
   },
   "btnUrlTitle": {
-    "message": "Import instantané — NotebookLM scrape la page",
-    "description": "Infobulle du bouton format URL"
+    "message": "Import instantané — NotebookLM scrape la page"
   },
   "btnScreenshotTitle": {
-    "message": "Capture le viewport visible en PNG",
-    "description": "Infobulle du bouton Screenshot"
+    "message": "Capture le viewport visible en PNG"
   },
   "btnDriveTitle": {
-    "message": "Synchronisation native Google Drive",
-    "description": "Infobulle du bouton Drive"
+    "message": "Synchronisation native Google Drive"
   },
   "btnDirectTitle": {
-    "message": "Importer le fichier original tel quel",
-    "description": "Infobulle du bouton Import Direct"
+    "message": "Importer le fichier original tel quel"
   },
-  "notifSuccessTitle": {
-    "message": "Magic Clipper pour NotebookLM",
-    "description": "Titre de la notification de succès"
-  },
-  "notifSelectionImported": {
-    "message": "Sélection importée depuis \"{title}\"",
-    "description": "Corps de la notification après import d'une sélection",
-    "placeholders": {
-      "title": { "content": "$1", "example": "Ma page" }
-    }
-  },
-  "formatLabelPdf": { "message": "PDF" },
-  "formatLabelMarkdown": { "message": "Markdown" },
-  "formatLabelUrl": { "message": "URL" },
-  "formatLabelScreenshot": { "message": "Screenshot" },
-  "formatLabelDirect": { "message": "Import direct" },
-  "formatLabelDrive": { "message": "Google Drive" },
-  "formatLabelSelection": { "message": "Sélection de texte" }
+  "btnClearSelectionTitle": {
+    "message": "Annuler"
+  }
 }

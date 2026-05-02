@@ -30,3 +30,4 @@ lib/html2pdf.bundle.min.js
 sign.sh
 web-ext-config.cjs
 web-ext-artifacts/
+tools/
